@@ -1,69 +1,65 @@
+
 package org.linlinjava.litemall.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "litemall.wx")
+@ConfigurationProperties(prefix="litemall.wx")
 public class WxProperties {
 
-    private String appId;
+	private String appId;
+	private String appSecret;
+	private String mchId;
+	private String mchKey;
+	private String notifyUrl;
+	private String keyPath;
 
-    private String appSecret;
+	public String getNotifyUrl() {
+		return notifyUrl;
+	}
 
-    private String mchId;
+	public void setNotifyUrl(String notifyUrl) {
+		this.notifyUrl = notifyUrl;
+	}
 
-    private String mchKey;
+	public String getMchKey() {
+		return mchKey;
+	}
 
-    private String notifyUrl;
+	public void setMchKey(String mchKey) {
+		this.mchKey = mchKey;
+	}
 
-    private String keyPath;
+	public String getAppId() {
+		return this.appId;
+	}
 
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
+	public String getAppSecret() {
+		return appSecret;
+	}
 
-    public String getMchKey() {
-        return mchKey;
-    }
+	public void setAppSecret(String appSecret) {
+		this.appSecret = appSecret;
+	}
 
-    public void setMchKey(String mchKey) {
-        this.mchKey = mchKey;
-    }
+	public String getMchId() {
+		return mchId;
+	}
 
-    public String getAppId() {
-        return this.appId;
-    }
+	public void setMchId(String mchId) {
+		this.mchId = mchId;
+	}
 
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
+	public String getKeyPath() {
+		return keyPath;
+	}
 
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    public String getMchId() {
-        return mchId;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId = mchId;
-    }
-
-    public String getKeyPath() {
-        return keyPath;
-    }
-
-    public void setKeyPath(String keyPath) {
-        this.keyPath = keyPath;
-    }
+	public void setKeyPath(String keyPath) {
+		this.keyPath = keyPath;
+	}
 }

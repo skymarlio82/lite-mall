@@ -1,190 +1,192 @@
+
 package org.linlinjava.litemall.core.storage.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "litemall.storage")
+@ConfigurationProperties(prefix="litemall.storage")
 public class StorageProperties {
-    private String active;
-    private Local local;
-    private Aliyun aliyun;
-    private Tencent tencent;
-    private Qiniu qiniu;
 
-    public String getActive() {
-        return active;
-    }
+	private String active;
+	private Local local;
+	private Aliyun aliyun;
+	private Tencent tencent;
+	private Qiniu qiniu;
 
-    public void setActive(String active) {
-        this.active = active;
-    }
+	public String getActive() {
+		return active;
+	}
 
-    public Local getLocal() {
-        return local;
-    }
+	public void setActive(String active) {
+		this.active = active;
+	}
 
-    public void setLocal(Local local) {
-        this.local = local;
-    }
+	public Local getLocal() {
+		return local;
+	}
 
-    public Aliyun getAliyun() {
-        return aliyun;
-    }
+	public void setLocal(Local local) {
+		this.local = local;
+	}
 
-    public void setAliyun(Aliyun aliyun) {
-        this.aliyun = aliyun;
-    }
+	public Aliyun getAliyun() {
+		return aliyun;
+	}
 
-    public Tencent getTencent() {
-        return tencent;
-    }
+	public void setAliyun(Aliyun aliyun) {
+		this.aliyun = aliyun;
+	}
 
-    public void setTencent(Tencent tencent) {
-        this.tencent = tencent;
-    }
+	public Tencent getTencent() {
+		return tencent;
+	}
 
-    public Qiniu getQiniu() {
-        return qiniu;
-    }
+	public void setTencent(Tencent tencent) {
+		this.tencent = tencent;
+	}
 
-    public void setQiniu(Qiniu qiniu) {
-        this.qiniu = qiniu;
-    }
+	public Qiniu getQiniu() {
+		return qiniu;
+	}
 
-    public static class Local {
-        private String address;
-        private String storagePath;
+	public void setQiniu(Qiniu qiniu) {
+		this.qiniu = qiniu;
+	}
 
-        public String getAddress() {
-            return address;
-        }
+	public static class Local {
+		private String address;
+		private String storagePath;
 
-        public void setAddress(String address) {
-            this.address = address;
-        }
+		public String getAddress() {
+			return address;
+		}
 
-        public String getStoragePath() {
-            return storagePath;
-        }
+		public void setAddress(String address) {
+			this.address = address;
+		}
 
-        public void setStoragePath(String storagePath) {
-            this.storagePath = storagePath;
-        }
-    }
+		public String getStoragePath() {
+			return storagePath;
+		}
 
-    public static class Tencent {
-        private String secretId;
-        private String secretKey;
-        private String region;
-        private String bucketName;
+		public void setStoragePath(String storagePath) {
+			this.storagePath = storagePath;
+		}
+	}
 
-        public String getSecretId() {
-            return secretId;
-        }
+	public static class Tencent {
+		private String secretId;
+		private String secretKey;
+		private String region;
+		private String bucketName;
 
-        public void setSecretId(String secretId) {
-            this.secretId = secretId;
-        }
+		public String getSecretId() {
+			return secretId;
+		}
 
-        public String getSecretKey() {
-            return secretKey;
-        }
+		public void setSecretId(String secretId) {
+			this.secretId = secretId;
+		}
 
-        public void setSecretKey(String secretKey) {
-            this.secretKey = secretKey;
-        }
+		public String getSecretKey() {
+			return secretKey;
+		}
 
-        public String getRegion() {
-            return region;
-        }
+		public void setSecretKey(String secretKey) {
+			this.secretKey = secretKey;
+		}
 
-        public void setRegion(String region) {
-            this.region = region;
-        }
+		public String getRegion() {
+			return region;
+		}
 
-        public String getBucketName() {
-            return bucketName;
-        }
+		public void setRegion(String region) {
+			this.region = region;
+		}
 
-        public void setBucketName(String bucketName) {
-            this.bucketName = bucketName;
-        }
-    }
+		public String getBucketName() {
+			return bucketName;
+		}
 
-    public static class Aliyun {
-        private String endpoint;
-        private String accessKeyId;
-        private String accessKeySecret;
-        private String bucketName;
+		public void setBucketName(String bucketName) {
+			this.bucketName = bucketName;
+		}
+	}
 
-        public String getEndpoint() {
-            return endpoint;
-        }
+	public static class Aliyun {
+		private String endpoint;
+		private String accessKeyId;
+		private String accessKeySecret;
+		private String bucketName;
 
-        public void setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
-        }
+		public String getEndpoint() {
+			return endpoint;
+		}
 
-        public String getAccessKeyId() {
-            return accessKeyId;
-        }
+		public void setEndpoint(String endpoint) {
+			this.endpoint = endpoint;
+		}
 
-        public void setAccessKeyId(String accessKeyId) {
-            this.accessKeyId = accessKeyId;
-        }
+		public String getAccessKeyId() {
+			return accessKeyId;
+		}
 
-        public String getAccessKeySecret() {
-            return accessKeySecret;
-        }
+		public void setAccessKeyId(String accessKeyId) {
+			this.accessKeyId = accessKeyId;
+		}
 
-        public void setAccessKeySecret(String accessKeySecret) {
-            this.accessKeySecret = accessKeySecret;
-        }
+		public String getAccessKeySecret() {
+			return accessKeySecret;
+		}
 
-        public String getBucketName() {
-            return bucketName;
-        }
+		public void setAccessKeySecret(String accessKeySecret) {
+			this.accessKeySecret = accessKeySecret;
+		}
 
-        public void setBucketName(String bucketName) {
-            this.bucketName = bucketName;
-        }
-    }
+		public String getBucketName() {
+			return bucketName;
+		}
 
-    public static class Qiniu {
-        private String endpoint;
-        private String accessKey;
-        private String secretKey;
-        private String bucketName;
+		public void setBucketName(String bucketName) {
+			this.bucketName = bucketName;
+		}
+	}
 
-        public String getEndpoint() {
-            return endpoint;
-        }
+	public static class Qiniu {
+		private String endpoint;
+		private String accessKey;
+		private String secretKey;
+		private String bucketName;
 
-        public void setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
-        }
+		public String getEndpoint() {
+			return endpoint;
+		}
 
-        public String getAccessKey() {
-            return accessKey;
-        }
+		public void setEndpoint(String endpoint) {
+			this.endpoint = endpoint;
+		}
 
-        public void setAccessKey(String accessKey) {
-            this.accessKey = accessKey;
-        }
+		public String getAccessKey() {
+			return accessKey;
+		}
 
-        public String getSecretKey() {
-            return secretKey;
-        }
+		public void setAccessKey(String accessKey) {
+			this.accessKey = accessKey;
+		}
 
-        public void setSecretKey(String secretKey) {
-            this.secretKey = secretKey;
-        }
+		public String getSecretKey() {
+			return secretKey;
+		}
 
-        public String getBucketName() {
-            return bucketName;
-        }
+		public void setSecretKey(String secretKey) {
+			this.secretKey = secretKey;
+		}
 
-        public void setBucketName(String bucketName) {
-            this.bucketName = bucketName;
-        }
-    }
+		public String getBucketName() {
+			return bucketName;
+		}
+
+		public void setBucketName(String bucketName) {
+			this.bucketName = bucketName;
+		}
+	}
 }

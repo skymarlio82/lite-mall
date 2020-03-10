@@ -1,6 +1,11 @@
+
 package org.linlinjava.litemall.core.storage.config;
 
-import org.linlinjava.litemall.core.storage.*;
+import org.linlinjava.litemall.core.storage.AliyunStorage;
+import org.linlinjava.litemall.core.storage.LocalStorage;
+import org.linlinjava.litemall.core.storage.QiniuStorage;
+import org.linlinjava.litemall.core.storage.StorageService;
+import org.linlinjava.litemall.core.storage.TencentStorage;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +36,6 @@ public class StorageAutoConfiguration {
         } else {
             throw new RuntimeException("当前存储模式 " + active + " 不支持");
         }
-
         return storageService;
     }
 

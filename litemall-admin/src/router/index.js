@@ -159,7 +159,7 @@ export const asyncRouterMap = [
     name: 'mallManage',
     meta: {
       title: '商场管理',
-      icon: 'chart'
+      icon: 'edit'
     },
     children: [
       {
@@ -168,6 +168,7 @@ export const asyncRouterMap = [
         name: 'region',
         meta: {
           title: '行政区域',
+          icon: 'documentation',
           noCache: true
         }
       },
@@ -285,7 +286,7 @@ export const asyncRouterMap = [
     name: 'promotionManage',
     meta: {
       title: '推广管理',
-      icon: 'chart'
+      icon: 'edit'
     },
     children: [
       {
@@ -295,6 +296,7 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/ad/list', 'POST /admin/ad/create', 'GET /admin/ad/read', 'POST /admin/ad/update', 'POST /admin/ad/delete'],
           title: '广告管理',
+          icon: 'form',
           noCache: true
         }
       },
@@ -305,6 +307,7 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/coupon/list', 'POST /admin/coupon/create', 'POST /admin/coupon/update', 'POST /admin/coupon/delete'],
           title: '优惠券管理',
+          icon: 'form',
           noCache: true
         }
       },
@@ -326,6 +329,7 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/topic/list', 'POST /admin/topic/create', 'GET /admin/topic/read', 'POST /admin/topic/update', 'POST /admin/topic/delete'],
           title: '专题管理',
+          icon: 'form',
           noCache: true
         }
       },
@@ -358,6 +362,7 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
           title: '团购规则',
+          icon: 'form',
           noCache: true
         }
       },
@@ -368,6 +373,7 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/groupon/listRecord'],
           title: '团购活动',
+          icon: 'table',
           noCache: true
         }
       }
@@ -533,34 +539,13 @@ export const asyncRouterMap = [
       icon: 'link'
     },
     children: [
-      {
-        path: 'https://cloud.tencent.com/product/cos',
-        meta: { title: '腾讯云存储', icon: 'link' }
-      },
-      {
-        path: 'https://cloud.tencent.com/product/sms',
-        meta: { title: '腾讯云短信', icon: 'link' }
-      },
-      {
-        path: 'https://pay.weixin.qq.com/index.php/core/home/login',
-        meta: { title: '微信支付', icon: 'link' }
-      },
-      {
-        path: 'https://mpkf.weixin.qq.com/',
-        meta: { title: '小程序客服', icon: 'link' }
-      },
-      {
-        path: 'https://www.alibabacloud.com/zh/product/oss',
-        meta: { title: '阿里云存储', icon: 'link' }
-      },
-      {
-        path: 'https://www.qiniu.com/products/kodo',
-        meta: { title: '七牛云存储', icon: 'link' }
-      },
-      {
-        path: 'http://www.kdniao.com/api-track',
-        meta: { title: '快递鸟', icon: 'link' }
-      }
+      { path: 'https://cloud.tencent.com/product/cos', meta: { title: '腾讯云存储' } },
+      { path: 'https://cloud.tencent.com/product/sms', meta: { title: '腾讯云短信' } },
+      { path: 'https://pay.weixin.qq.com/index.php/core/home/login', meta: { title: '微信支付' } },
+      { path: 'https://mpkf.weixin.qq.com/', meta: { title: '小程序客服' } },
+      { path: 'https://www.alibabacloud.com/zh/product/oss', meta: { title: '阿里云存储' } },
+      { path: 'https://www.qiniu.com/products/kodo', meta: { title: '七牛云存储' } },
+      { path: 'http://www.kdniao.com/api-track', meta: { title: '快递鸟' } }
     ]
   },
   {

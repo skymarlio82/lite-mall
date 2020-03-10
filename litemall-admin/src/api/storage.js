@@ -1,3 +1,4 @@
+
 import request from '@/utils/request'
 
 export function listStorage(query) {
@@ -41,4 +42,5 @@ export function deleteStorage(data) {
 }
 
 const uploadPath = process.env.BASE_API + '/storage/create'
+
 export { uploadPath }
