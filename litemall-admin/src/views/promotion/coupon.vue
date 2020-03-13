@@ -51,7 +51,7 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
     <!-- 添加或修改对话框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="dataForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="dataForm" status-icon label-position="left" label-width="100px" style="width:400px;margin-left:50px;">
         <el-form-item label="优惠券名称" prop="name">
           <el-input v-model="dataForm.name"/>
         </el-form-item>
@@ -130,38 +130,22 @@ import { listCoupon, createCoupon, updateCoupon, deleteCoupon } from '@/api/coup
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 const defaultTypeOptions = [
-  {
-    label: '通用领券',
-    value: 0
-  },
-  {
-    label: '注册赠券',
-    value: 1
-  },
-  {
-    label: '兑换码',
-    value: 2
-  }
+  { label: '通用领券', value: 0 },
+  { label: '注册赠券', value: 1 },
+  { label: '兑换码', value: 2 }
 ]
 
 const defaultStatusOptions = [
-  {
-    label: '正常',
-    value: 0
-  },
-  {
-    label: '已过期',
-    value: 1
-  },
-  {
-    label: '已下架',
-    value: 2
-  }
+  { label: '正常', value: 0 },
+  { label: '已过期', value: 1 },
+  { label: '已下架', value: 2 }
 ]
 
 export default {
   name: 'Coupon',
-  components: { Pagination },
+  components: {
+    Pagination
+  },
   filters: {
     formatType(type) {
       for (let i = 0; i < defaultTypeOptions.length; i++) {

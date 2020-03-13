@@ -1,3 +1,4 @@
+
 package org.linlinjava.litemall.core.notify.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,151 +7,152 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@ConfigurationProperties(prefix = "litemall.notify")
+@ConfigurationProperties(prefix="litemall.notify")
 public class NotifyProperties {
-    private Mail mail;
-    private Sms sms;
-    private Wx wx;
 
-    public Mail getMail() {
-        return mail;
-    }
+	private Mail mail;
+	private Sms sms;
+	private Wx wx;
 
-    public void setMail(Mail mail) {
-        this.mail = mail;
-    }
+	public Mail getMail() {
+		return mail;
+	}
 
-    public Sms getSms() {
-        return sms;
-    }
+	public void setMail(Mail mail) {
+		this.mail = mail;
+	}
 
-    public void setSms(Sms sms) {
-        this.sms = sms;
-    }
+	public Sms getSms() {
+		return sms;
+	}
 
-    public Wx getWx() {
-        return wx;
-    }
+	public void setSms(Sms sms) {
+		this.sms = sms;
+	}
 
-    public void setWx(Wx wx) {
-        this.wx = wx;
-    }
+	public Wx getWx() {
+		return wx;
+	}
 
-    public static class Mail {
-        private boolean enable;
-        private String host;
-        private String username;
-        private String password;
-        private String sendfrom;
-        private String sendto;
+	public void setWx(Wx wx) {
+		this.wx = wx;
+	}
 
-        public boolean isEnable() {
-            return enable;
-        }
+	public static class Mail {
+		private boolean enable;
+		private String host;
+		private String username;
+		private String password;
+		private String sendfrom;
+		private String sendto;
 
-        public void setEnable(boolean enable) {
-            this.enable = enable;
-        }
+		public boolean isEnable() {
+			return enable;
+		}
 
-        public String getHost() {
-            return host;
-        }
+		public void setEnable(boolean enable) {
+			this.enable = enable;
+		}
 
-        public void setHost(String host) {
-            this.host = host;
-        }
+		public String getHost() {
+			return host;
+		}
 
-        public String getUsername() {
-            return username;
-        }
+		public void setHost(String host) {
+			this.host = host;
+		}
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
+		public String getUsername() {
+			return username;
+		}
 
-        public String getPassword() {
-            return password;
-        }
+		public void setUsername(String username) {
+			this.username = username;
+		}
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+		public String getPassword() {
+			return password;
+		}
 
-        public String getSendfrom() {
-            return sendfrom;
-        }
+		public void setPassword(String password) {
+			this.password = password;
+		}
 
-        public void setSendfrom(String sendfrom) {
-            this.sendfrom = sendfrom;
-        }
+		public String getSendfrom() {
+			return sendfrom;
+		}
 
-        public String getSendto() {
-            return sendto;
-        }
+		public void setSendfrom(String sendfrom) {
+			this.sendfrom = sendfrom;
+		}
 
-        public void setSendto(String sendto) {
-            this.sendto = sendto;
-        }
-    }
+		public String getSendto() {
+			return sendto;
+		}
 
-    public static class Sms {
-        private boolean enable;
-        private int appid;
-        private String appkey;
-        private List<Map<String, String>> template = new ArrayList<>();
+		public void setSendto(String sendto) {
+			this.sendto = sendto;
+		}
+	}
 
-        public boolean isEnable() {
-            return enable;
-        }
+	public static class Sms {
+		private boolean enable;
+		private int appid;
+		private String appkey;
+		private List<Map<String, String>> template = new ArrayList<>();
 
-        public void setEnable(boolean enable) {
-            this.enable = enable;
-        }
+		public boolean isEnable() {
+			return enable;
+		}
 
-        public int getAppid() {
-            return appid;
-        }
+		public void setEnable(boolean enable) {
+			this.enable = enable;
+		}
 
-        public void setAppid(int appid) {
-            this.appid = appid;
-        }
+		public int getAppid() {
+			return appid;
+		}
 
-        public String getAppkey() {
-            return appkey;
-        }
+		public void setAppid(int appid) {
+			this.appid = appid;
+		}
 
-        public void setAppkey(String appkey) {
-            this.appkey = appkey;
-        }
+		public String getAppkey() {
+			return appkey;
+		}
 
-        public List<Map<String, String>> getTemplate() {
-            return template;
-        }
+		public void setAppkey(String appkey) {
+			this.appkey = appkey;
+		}
 
-        public void setTemplate(List<Map<String, String>> template) {
-            this.template = template;
-        }
-    }
+		public List<Map<String, String>> getTemplate() {
+			return template;
+		}
 
-    public static class Wx {
-        private boolean enable;
-        private List<Map<String, String>> template = new ArrayList<>();
+		public void setTemplate(List<Map<String, String>> template) {
+			this.template = template;
+		}
+	}
 
-        public boolean isEnable() {
-            return enable;
-        }
+	public static class Wx {
+		private boolean enable;
+		private List<Map<String, String>> template = new ArrayList<>();
 
-        public void setEnable(boolean enable) {
-            this.enable = enable;
-        }
+		public boolean isEnable() {
+			return enable;
+		}
 
-        public List<Map<String, String>> getTemplate() {
-            return template;
-        }
+		public void setEnable(boolean enable) {
+			this.enable = enable;
+		}
 
-        public void setTemplate(List<Map<String, String>> template) {
-            this.template = template;
-        }
-    }
+		public List<Map<String, String>> getTemplate() {
+			return template;
+		}
+
+		public void setTemplate(List<Map<String, String>> template) {
+			this.template = template;
+		}
+	}
 
 }
