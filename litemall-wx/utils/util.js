@@ -2,16 +2,13 @@ var api = require('../config/api.js');
 var app = getApp();
 
 function formatTime(date) {
-  var year = date.getFullYear()
-  var month = date.getMonth() + 1
-  var day = date.getDate()
-
-  var hour = date.getHours()
-  var minute = date.getMinutes()
-  var second = date.getSeconds()
-
-
-  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':');
 }
 
 function formatNumber(n) {
@@ -33,9 +30,7 @@ function request(url, data = {}, method = "GET") {
         'X-Litemall-Token': wx.getStorageSync('token')
       },
       success: function(res) {
-
         if (res.statusCode == 200) {
-
           if (res.data.errno == 501) {
             // 清除登录相关内容
             try {
@@ -54,17 +49,15 @@ function request(url, data = {}, method = "GET") {
         } else {
           reject(res.errMsg);
         }
-
       },
       fail: function(err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   });
 }
 
 function redirect(url) {
-
   //判断页面是否需要登录
   if (false) {
     wx.redirectTo({
@@ -82,7 +75,7 @@ function showErrorToast(msg) {
   wx.showToast({
     title: msg,
     image: '/static/images/icon_error.png'
-  })
+  });
 }
 
 module.exports = {

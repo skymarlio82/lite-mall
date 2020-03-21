@@ -1,3 +1,4 @@
+
 package org.linlinjava.litemall.wx.web;
 
 import org.linlinjava.litemall.core.util.ResponseUtil;
@@ -17,16 +18,16 @@ import java.util.Map;
 @Validated
 public class WxUserController {
 
-    @Autowired
-    private LitemallOrderService orderService = null;
+	@Autowired
+	private LitemallOrderService orderService = null;
 
-    @GetMapping("index")
-    public Object list(@LoginUser Integer userId) {
-        if (userId == null) {
-            return ResponseUtil.unlogin();
-        }
-        Map<Object, Object> data = new HashMap<Object, Object>();
-        data.put("order", orderService.orderInfo(userId));
-        return ResponseUtil.ok(data);
-    }
+	@GetMapping("index")
+	public Object list(@LoginUser Integer userId) {
+		if (userId == null) {
+			return ResponseUtil.unlogin();
+		}
+		Map<Object, Object> data = new HashMap<Object, Object>();
+		data.put("order", orderService.orderInfo(userId));
+		return ResponseUtil.ok(data);
+	}
 }

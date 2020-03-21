@@ -12,11 +12,11 @@ App({
         success: function(res) {
           if (res.confirm) {
             // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-            updateManager.applyUpdate()
+            updateManager.applyUpdate();
           }
         }
-      })
-    })
+      });
+    });
   },
   onShow: function(options) {
     user.checkLogin().then(res => {
@@ -28,4 +28,4 @@ App({
   globalData: {
     hasLogin: false
   }
-})
+});

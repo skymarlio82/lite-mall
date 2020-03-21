@@ -99,7 +99,9 @@ public class WxAuthController {
         try {
             WxMaJscode2SessionResult result = this.wxService.getUserService().getSessionInfo(code);
             sessionKey = result.getSessionKey();
+            System.out.println("wx-sessionKey=" + sessionKey);
             openId = result.getOpenid();
+            System.out.println("wx-openId=" + sessionKey);
         } catch (Exception e) {
             e.printStackTrace();
         }

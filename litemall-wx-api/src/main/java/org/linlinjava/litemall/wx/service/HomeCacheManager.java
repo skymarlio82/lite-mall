@@ -1,3 +1,4 @@
+
 package org.linlinjava.litemall.wx.service;
 
 import java.time.LocalDateTime;
@@ -10,70 +11,70 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class HomeCacheManager {
 
-    public static final boolean ENABLE = false;
-    public static final String INDEX = "index";
-    public static final String CATALOG = "catalog";
-    public static final String GOODS = "goods";
+	public static final boolean ENABLE = false;
+	public static final String INDEX = "index";
+	public static final String CATALOG = "catalog";
+	public static final String GOODS = "goods";
 
-    private static ConcurrentHashMap<String, Map<String, Object>> cacheDataList = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<String, Map<String, Object>> cacheDataList = new ConcurrentHashMap<>();
 
-    /**
-     * 缓存首页数据
-     *
-     * @param data
-     */
-    public static void loadData(String cacheKey, Map<String, Object> data) {
-        Map<String, Object> cacheData = cacheDataList.get(cacheKey);
-        if (cacheData != null) {
-            cacheDataList.remove(cacheKey);
-        }
-        cacheData = new HashMap<>();
-        cacheData.putAll(data);
-        cacheData.put("isCache", "true");
-        cacheData.put("expireTime", LocalDateTime.now().plusMinutes(10));
-        cacheDataList.put(cacheKey, cacheData);
-    }
+	/**
+	 * 缓存首页数据
+	 *
+	 * @param data
+	 */
+	public static void loadData(String cacheKey, Map<String, Object> data) {
+		Map<String, Object> cacheData = cacheDataList.get(cacheKey);
+		if (cacheData != null) {
+			cacheDataList.remove(cacheKey);
+		}
+		cacheData = new HashMap<>();
+		cacheData.putAll(data);
+		cacheData.put("isCache", "true");
+		cacheData.put("expireTime", LocalDateTime.now().plusMinutes(10));
+		cacheDataList.put(cacheKey, cacheData);
+	}
 
-    public static Map<String, Object> getCacheData(String cacheKey) {
-        return cacheDataList.get(cacheKey);
-    }
+	public static Map<String, Object> getCacheData(String cacheKey) {
+		return cacheDataList.get(cacheKey);
+	}
 
-    /**
-     * 判断缓存中是否有数据
-     *
-     * @return
-     */
-    public static boolean hasData(String cacheKey) {
-        if (!ENABLE) {
-            return false;
-        }
-        Map<String, Object> cacheData = cacheDataList.get(cacheKey);
-        if (cacheData == null) {
-            return false;
-        } else {
-            LocalDateTime expire = (LocalDateTime) cacheData.get("expireTime");
-            if (expire.isBefore(LocalDateTime.now())) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
+	/**
+	 * 判断缓存中是否有数据
+	 *
+	 * @return
+	 */
+	public static boolean hasData(String cacheKey) {
+		if (!ENABLE) {
+			return false;
+		}
+		Map<String, Object> cacheData = cacheDataList.get(cacheKey);
+		if (cacheData == null) {
+			return false;
+		} else {
+			LocalDateTime expire = (LocalDateTime) cacheData.get("expireTime");
+			if (expire.isBefore(LocalDateTime.now())) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
 
-    /**
-     * 清除所有缓存
-     */
-    public static void clearAll() {
-        cacheDataList = new ConcurrentHashMap<>();
-    }
+	/**
+	 * 清除所有缓存
+	 */
+	public static void clearAll() {
+		cacheDataList = new ConcurrentHashMap<>();
+	}
 
-    /**
-     * 清除缓存数据
-     */
-    public static void clear(String cacheKey) {
-        Map<String, Object> cacheData = cacheDataList.get(cacheKey);
-        if (cacheData != null) {
-            cacheDataList.remove(cacheKey);
-        }
-    }
+	/**
+	 * 清除缓存数据
+	 */
+	public static void clear(String cacheKey) {
+		Map<String, Object> cacheData = cacheDataList.get(cacheKey);
+		if (cacheData != null) {
+			cacheDataList.remove(cacheKey);
+		}
+	}
 }
