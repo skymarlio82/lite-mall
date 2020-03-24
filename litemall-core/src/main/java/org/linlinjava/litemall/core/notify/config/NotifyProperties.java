@@ -39,6 +39,7 @@ public class NotifyProperties {
 	}
 
 	public static class Mail {
+
 		private boolean enable;
 		private String host;
 		private String username;
@@ -96,6 +97,7 @@ public class NotifyProperties {
 	}
 
 	public static class Sms {
+
 		private boolean enable;
 		private int appid;
 		private String appkey;
@@ -135,6 +137,7 @@ public class NotifyProperties {
 	}
 
 	public static class Wx {
+
 		private boolean enable;
 		private List<Map<String, String>> template = new ArrayList<>();
 
@@ -154,5 +157,4 @@ public class NotifyProperties {
 			this.template = template;
 		}
 	}
-
 }

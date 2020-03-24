@@ -25,7 +25,7 @@ public class ExpressService {
 	// 请求url
 	private String ReqURL = "http://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx";
 
-	private ExpressProperties properties;
+	private ExpressProperties properties = null;
 
 	public ExpressProperties getProperties() {
 		return properties;
