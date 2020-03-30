@@ -49,7 +49,7 @@ export default {
   },
 
   activated() {
-    this.isSuccess = this.status === 'success';
+    this.isSuccess = (this.status === 'success' || this.status === 'SUCCESS');
   }
 };
 </script>
