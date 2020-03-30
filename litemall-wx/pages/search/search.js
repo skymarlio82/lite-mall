@@ -1,10 +1,11 @@
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
 
-var app = getApp()
+var app = getApp();
+
 Page({
   data: {
-    keywrod: '',
+    keyword: '',
     searchStatus: false,
     goodsList: [],
     helpKeyword: [],
@@ -20,24 +21,22 @@ Page({
     limit: 20,
     categoryId: 0
   },
-  //事件处理函数
-  closeSearch: function() {
-    wx.navigateBack()
+  // 事件处理函数
+  closeSearch: function () {
+    wx.navigateBack();
   },
-  clearKeyword: function() {
+  clearKeyword: function () {
     this.setData({
       keyword: '',
       searchStatus: false
     });
   },
-  onLoad: function() {
-
+  onLoad: function () {
     this.getSearchKeyword();
   },
-
   getSearchKeyword() {
     let that = this;
-    util.request(api.SearchIndex).then(function(res) {
+    util.request(api.SearchIndex, {}, 'GET').then(function (res) {
       if (res.errno === 0) {
         that.setData({
           historyKeyword: res.data.historyKeywordList,
@@ -47,22 +46,29 @@ Page({
       }
     });
   },
-
-  inputChange: function(e) {
+  inputChange: function (e) {
     this.setData({
       keyword: e.detail.value,
       searchStatus: false
     });
-
     if (e.detail.value) {
       this.getHelpKeyword();
     }
   },
-  getHelpKeyword: function() {
+  inputFocus: function () {
+    this.setData({
+      searchStatus: false,
+      goodsList: []
+    });
+    if (this.data.keyword) {
+      this.getHelpKeyword();
+    }
+  },
+  getHelpKeyword: function () {
     let that = this;
     util.request(api.SearchHelper, {
       keyword: that.data.keyword
-    }).then(function(res) {
+    }, 'GET').then(function (res) {
       if (res.errno === 0) {
         that.setData({
           helpKeyword: res.data
@@ -70,27 +76,15 @@ Page({
       }
     });
   },
-  inputFocus: function() {
-    this.setData({
-      searchStatus: false,
-      goodsList: []
-    });
-
-    if (this.data.keyword) {
-      this.getHelpKeyword();
-    }
-  },
-  clearHistory: function() {
+  clearHistory: function () {
     this.setData({
       historyKeyword: []
-    })
-
-    util.request(api.SearchClearHistory, {}, 'POST')
-      .then(function(res) {
-        console.log('清除成功');
-      });
+    });
+    util.request(api.SearchClearHistory, {}, 'POST').then(function (res) {
+      console.log('清除成功');
+    });
   },
-  getGoodsList: function() {
+  getGoodsList: function () {
     let that = this;
     util.request(api.GoodsList, {
       keyword: that.data.keyword,
@@ -99,7 +93,7 @@ Page({
       sort: that.data.currentSort,
       order: that.data.currentSortOrder,
       categoryId: that.data.categoryId
-    }).then(function(res) {
+    }, 'GET').then(function (res) {
       if (res.errno === 0) {
         that.setData({
           searchStatus: true,
@@ -108,17 +102,14 @@ Page({
           filterCategory: res.data.filterCategoryList
         });
       }
-
-      //重新获取关键词
+      // 重新获取关键词
       that.getSearchKeyword();
     });
   },
-  onKeywordTap: function(event) {
-
-    this.getSearchResult(event.target.dataset.keyword);
-
+  onKeywordTap: function (e) {
+    this.getSearchResult(e.target.dataset.keyword);
   },
-  getSearchResult(keyword) {
+  getSearchResult (keyword) {
     if (keyword === '') {
       keyword = this.data.defaultKeyword.keyword;
     }
@@ -128,11 +119,10 @@ Page({
       categoryId: 0,
       goodsList: []
     });
-
     this.getGoodsList();
   },
-  openSortFilter: function(event) {
-    let currentId = event.currentTarget.id;
+  openSortFilter: function (e) {
+    let currentId = e.currentTarget.id;
     switch (currentId) {
       case 'categoryFilter':
         this.setData({
@@ -153,23 +143,22 @@ Page({
           currentSortOrder: tmpSortOrder,
           categoryFilter: false
         });
-
         this.getGoodsList();
         break;
       default:
-        //综合排序
+        // 综合排序
         this.setData({
           currentSortType: 'default',
           currentSort: 'name',
           currentSortOrder: 'desc',
           categoryFilter: false,
-          categoryId: 0,
+          categoryId: 0
         });
         this.getGoodsList();
     }
   },
-  selectCategory: function(event) {
-    let currentIndex = event.target.dataset.categoryIndex;
+  selectCategory: function (e) {
+    let currentIndex = e.target.dataset.categoryIndex;
     let filterCategory = this.data.filterCategory;
     let currentCategory = null;
     for (let key in filterCategory) {
@@ -189,7 +178,7 @@ Page({
     });
     this.getGoodsList();
   },
-  onKeywordConfirm(event) {
-    this.getSearchResult(event.detail.value);
+  onKeywordConfirm (e) {
+    this.getSearchResult(e.detail.value);
   }
-})
+});

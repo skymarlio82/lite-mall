@@ -17,7 +17,7 @@ import org.linlinjava.litemall.db.service.LitemallCouponUserService;
 import org.linlinjava.litemall.db.service.LitemallGrouponRulesService;
 import org.linlinjava.litemall.db.util.CouponConstant;
 import org.linlinjava.litemall.wx.annotation.LoginUser;
-import org.linlinjava.litemall.wx.util.WxResponseCode;
+import org.linlinjava.litemall.wx.util.wxpay.WxResponseCode;
 import org.linlinjava.litemall.wx.vo.CouponVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

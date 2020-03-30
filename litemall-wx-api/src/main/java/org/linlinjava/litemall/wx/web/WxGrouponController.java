@@ -32,13 +32,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+
+import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_INVALID;
+import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_UNKNOWN;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.linlinjava.litemall.wx.util.WxResponseCode.ORDER_INVALID;
-import static org.linlinjava.litemall.wx.util.WxResponseCode.ORDER_UNKNOWN;
 
 /**
  * 团购服务

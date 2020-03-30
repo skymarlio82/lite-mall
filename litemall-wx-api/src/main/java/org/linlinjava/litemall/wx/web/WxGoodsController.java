@@ -251,7 +251,8 @@ public class WxGoodsController {
 	 */
 	@GetMapping("list")
 	public Object list(Integer categoryId, Integer brandId, String keyword, Boolean isNew, Boolean isHot,
-		@LoginUser Integer userId, @RequestParam(defaultValue="1") Integer page,
+		@LoginUser Integer userId,
+		@RequestParam(defaultValue="1") Integer page,
 		@RequestParam(defaultValue="10") Integer limit,
 		@Sort(accepts={ "add_time", "retail_price", "name" }) @RequestParam(defaultValue="add_time") String sort,
 		@Order @RequestParam(defaultValue="desc") String order) {
@@ -264,7 +265,7 @@ public class WxGoodsController {
 			searchHistoryService.save(searchHistoryVo);
 		}
 		// 查询列表数据
-		List<LitemallGoods> goodsList = goodsService.querySelective(categoryId, brandId, keyword, isHot, isNew,
+		List<LitemallGoods> goodsList = goodsService.querySelective(categoryId, brandId, keyword, isHot, isNew, 
 			page, limit, sort, order);
 		// 查询商品所属类目列表。
 		List<Integer> goodsCatIds = goodsService.getCatIds(brandId, keyword, isHot, isNew);

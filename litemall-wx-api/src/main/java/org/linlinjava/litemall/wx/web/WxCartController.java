@@ -30,14 +30,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.GOODS_NO_STOCK;
+import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.GOODS_UNSHELVE;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.linlinjava.litemall.wx.util.WxResponseCode.GOODS_NO_STOCK;
-import static org.linlinjava.litemall.wx.util.WxResponseCode.GOODS_UNSHELVE;
 
 /**
  * 用户购物车服务

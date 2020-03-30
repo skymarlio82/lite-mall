@@ -344,6 +344,24 @@ export function orderDetail(query) {
   });
 }
 
+const OrderWxQrCode='wx/order/wxqrcode'; //申请QrCode
+export function orderWxQrCode(query) {
+  return request({
+    url: OrderWxQrCode,
+    method: 'get',
+    params: query
+  });
+}
+
+const OrderWxPayResult='wx/order/wxpayresult'; //申请QrCode
+export function orderWxPayResult(query) {
+  return request({
+    url: OrderWxPayResult,
+    method: 'get',
+    params: query
+  });
+}
+
 const OrderCancel='wx/order/cancel'; //取消订单
 export function orderCancel(data) {
   return request({

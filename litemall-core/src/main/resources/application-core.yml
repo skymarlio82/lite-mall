@@ -1,14 +1,14 @@
 litemall:
   # 开发者应该设置成自己的wx相关信息
   wx:
-    app-id: wx59aa5936873bc7b5
-    app-secret: bf8345d0c93d047d20478f548ec5fcbc
-    mch-id: 111111
-    mch-key: xxxxxx
-    notify-url: http://www.example.com/wx/order/pay-notify
+    app-id: wxba3211abca2a188c
+    app-secret: 71c65ffcd1bc9f803be323665d330797
+    mch-id: 1544571151
+    mch-key: 10c57d4598c54704873ec455722c9876
+    notify-url: https://www.sky888.cn/api/wx/order/pay-notify
     # 商户证书文件路径
     # 请参考“商户证书”一节 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
-    key-path: xxxxx
+    key-path: /root/software/1544571151_20200329_cert/apiclient_cert.p12
   #通知相关配置
   notify:
     mail:
