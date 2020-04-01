@@ -1,4 +1,4 @@
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

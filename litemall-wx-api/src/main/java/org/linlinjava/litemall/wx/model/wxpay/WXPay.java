@@ -1,9 +1,9 @@
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.linlinjava.litemall.wx.util.wxpay.WXPayConstants.SignType;
+import org.linlinjava.litemall.wx.model.wxpay.WXPayConstants.SignType;
 
 public class WXPay {
 

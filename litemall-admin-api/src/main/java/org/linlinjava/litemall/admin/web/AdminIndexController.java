@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.*;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.core.util.ResponseUtil;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin/index")
 public class AdminIndexController {
-    private final Log logger = LogFactory.getLog(AdminIndexController.class);
 
     @RequestMapping("/index")
     public Object index() {

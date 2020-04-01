@@ -1,3 +1,4 @@
+
 package org.linlinjava.litemall.admin.vo;
 
 import java.util.ArrayList;
@@ -6,26 +7,31 @@ import java.util.List;
 import java.util.Map;
 
 public class StatVo {
-    private String[] columns = new String[0];
-    private List<Map> rows = new ArrayList<>();
 
-    public String[] getColumns() {
-        return columns;
-    }
+	private String[] columns = new String[0];
+	@SuppressWarnings("rawtypes")
+	private List<Map> rows = new ArrayList<>();
 
-    public void setColumns(String[] columns) {
-        this.columns = columns;
-    }
+	public String[] getColumns() {
+		return columns;
+	}
 
-    public List<Map> getRows() {
-        return rows;
-    }
+	public void setColumns(String[] columns) {
+		this.columns = columns;
+	}
 
-    public void setRows(List<Map> rows) {
-        this.rows = rows;
-    }
+	@SuppressWarnings("rawtypes")
+	public List<Map> getRows() {
+		return rows;
+	}
 
-    public void add(Map... r) {
-        rows.addAll(Arrays.asList(r));
-    }
+	@SuppressWarnings("rawtypes")
+	public void setRows(List<Map> rows) {
+		this.rows = rows;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void add(Map... r) {
+		rows.addAll(Arrays.asList(r));
+	}
 }

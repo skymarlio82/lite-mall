@@ -1,4 +1,4 @@
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,7 +19,7 @@ import org.apache.http.util.EntityUtils;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 
-import static org.linlinjava.litemall.wx.util.wxpay.WXPayConstants.USER_AGENT;
+import static org.linlinjava.litemall.wx.model.wxpay.WXPayConstants.USER_AGENT;
 
 import java.io.InputStream;
 import java.net.SocketTimeoutException;

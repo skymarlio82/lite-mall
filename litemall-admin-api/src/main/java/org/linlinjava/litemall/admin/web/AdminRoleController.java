@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.admin.util.AdminResponseCode;
@@ -34,7 +33,6 @@ import static org.linlinjava.litemall.admin.util.AdminResponseCode.ROLE_USER_EXI
 @RequestMapping("/admin/role")
 @Validated
 public class AdminRoleController {
-    private final Log logger = LogFactory.getLog(AdminRoleController.class);
 
     @Autowired
     private LitemallRoleService roleService;

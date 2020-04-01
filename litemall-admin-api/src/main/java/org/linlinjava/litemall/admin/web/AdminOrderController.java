@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.admin.service.AdminOrderService;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequestMapping("/admin/order")
 @Validated
 public class AdminOrderController {
-    private final Log logger = LogFactory.getLog(AdminOrderController.class);
 
     @Autowired
     private AdminOrderService adminOrderService;

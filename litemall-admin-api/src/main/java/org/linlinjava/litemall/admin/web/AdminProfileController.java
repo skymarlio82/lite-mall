@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
@@ -24,7 +23,6 @@ import static org.linlinjava.litemall.admin.util.AdminResponseCode.ADMIN_INVALID
 @RequestMapping("/admin/profile")
 @Validated
 public class AdminProfileController {
-    private final Log logger = LogFactory.getLog(AdminProfileController.class);
 
     @Autowired
     private LitemallAdminService adminService;

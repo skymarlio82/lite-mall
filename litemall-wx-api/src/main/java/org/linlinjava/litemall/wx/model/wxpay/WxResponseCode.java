@@ -1,4 +1,4 @@
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
 public class WxResponseCode {
 

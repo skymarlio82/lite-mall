@@ -1,12 +1,17 @@
+
 package org.linlinjava.litemall.db.dao;
 
 import java.util.List;
 import java.util.Map;
 
 public interface StatMapper {
-    List<Map> statUser();
 
-    List<Map> statOrder();
+	@SuppressWarnings("rawtypes")
+	List<Map> statUser();
 
-    List<Map> statGoods();
+	@SuppressWarnings("rawtypes")
+	List<Map> statOrder();
+
+	@SuppressWarnings("rawtypes")
+	List<Map> statGoods();
 }

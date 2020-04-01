@@ -1,3 +1,4 @@
+
 package org.linlinjava.litemall.db.service;
 
 import org.linlinjava.litemall.db.dao.LitemallGoodsSpecificationMapper;
@@ -14,91 +15,81 @@ import java.util.Map;
 
 @Service
 public class LitemallGoodsSpecificationService {
-    @Resource
-    private LitemallGoodsSpecificationMapper goodsSpecificationMapper;
 
-    public List<LitemallGoodsSpecification> queryByGid(Integer id) {
-        LitemallGoodsSpecificationExample example = new LitemallGoodsSpecificationExample();
-        example.or().andGoodsIdEqualTo(id).andDeletedEqualTo(false);
-        return goodsSpecificationMapper.selectByExample(example);
-    }
+	@Resource
+	private LitemallGoodsSpecificationMapper goodsSpecificationMapper;
 
-    public LitemallGoodsSpecification findById(Integer id) {
-        return goodsSpecificationMapper.selectByPrimaryKey(id);
-    }
+	public List<LitemallGoodsSpecification> queryByGid(Integer id) {
+		LitemallGoodsSpecificationExample example = new LitemallGoodsSpecificationExample();
+		example.or().andGoodsIdEqualTo(id).andDeletedEqualTo(false);
+		return goodsSpecificationMapper.selectByExample(example);
+	}
 
-    public void deleteByGid(Integer gid) {
-        LitemallGoodsSpecificationExample example = new LitemallGoodsSpecificationExample();
-        example.or().andGoodsIdEqualTo(gid);
-        goodsSpecificationMapper.logicalDeleteByExample(example);
-    }
+	public LitemallGoodsSpecification findById(Integer id) {
+		return goodsSpecificationMapper.selectByPrimaryKey(id);
+	}
 
-    public void add(LitemallGoodsSpecification goodsSpecification) {
-        goodsSpecification.setAddTime(LocalDateTime.now());
-        goodsSpecification.setUpdateTime(LocalDateTime.now());
-        goodsSpecificationMapper.insertSelective(goodsSpecification);
-    }
+	public void deleteByGid(Integer gid) {
+		LitemallGoodsSpecificationExample example = new LitemallGoodsSpecificationExample();
+		example.or().andGoodsIdEqualTo(gid);
+		goodsSpecificationMapper.logicalDeleteByExample(example);
+	}
 
-    /**
-     * [
-     * {
-     * name: '',
-     * valueList: [ {}, {}]
-     * },
-     * {
-     * name: '',
-     * valueList: [ {}, {}]
-     * }
-     * ]
-     *
-     * @param id
-     * @return
-     */
-    public Object getSpecificationVoList(Integer id) {
-        List<LitemallGoodsSpecification> goodsSpecificationList = queryByGid(id);
+	public void add(LitemallGoodsSpecification goodsSpecification) {
+		goodsSpecification.setAddTime(LocalDateTime.now());
+		goodsSpecification.setUpdateTime(LocalDateTime.now());
+		goodsSpecificationMapper.insertSelective(goodsSpecification);
+	}
 
-        Map<String, VO> map = new HashMap<>();
-        List<VO> specificationVoList = new ArrayList<>();
+	/**
+	 * [ { name: '', valueList: [ {}, {}] }, { name: '', valueList: [ {}, {}] } ]
+	 *
+	 * @param id
+	 * @return
+	 */
+	public Object getSpecificationVoList(Integer id) {
+		List<LitemallGoodsSpecification> goodsSpecificationList = queryByGid(id);
+		Map<String, VO> map = new HashMap<>();
+		List<VO> specificationVoList = new ArrayList<>();
+		for (LitemallGoodsSpecification goodsSpecification : goodsSpecificationList) {
+			String specification = goodsSpecification.getSpecification();
+			VO goodsSpecificationVo = map.get(specification);
+			if (goodsSpecificationVo == null) {
+				goodsSpecificationVo = new VO();
+				goodsSpecificationVo.setName(specification);
+				List<LitemallGoodsSpecification> valueList = new ArrayList<>();
+				valueList.add(goodsSpecification);
+				goodsSpecificationVo.setValueList(valueList);
+				map.put(specification, goodsSpecificationVo);
+				specificationVoList.add(goodsSpecificationVo);
+			} else {
+				List<LitemallGoodsSpecification> valueList = goodsSpecificationVo.getValueList();
+				valueList.add(goodsSpecification);
+			}
+		}
+		return specificationVoList;
+	}
 
-        for (LitemallGoodsSpecification goodsSpecification : goodsSpecificationList) {
-            String specification = goodsSpecification.getSpecification();
-            VO goodsSpecificationVo = map.get(specification);
-            if (goodsSpecificationVo == null) {
-                goodsSpecificationVo = new VO();
-                goodsSpecificationVo.setName(specification);
-                List<LitemallGoodsSpecification> valueList = new ArrayList<>();
-                valueList.add(goodsSpecification);
-                goodsSpecificationVo.setValueList(valueList);
-                map.put(specification, goodsSpecificationVo);
-                specificationVoList.add(goodsSpecificationVo);
-            } else {
-                List<LitemallGoodsSpecification> valueList = goodsSpecificationVo.getValueList();
-                valueList.add(goodsSpecification);
-            }
-        }
+	private class VO {
 
-        return specificationVoList;
-    }
+		private String name;
+		private List<LitemallGoodsSpecification> valueList;
 
-    private class VO {
-        private String name;
-        private List<LitemallGoodsSpecification> valueList;
+		@SuppressWarnings("unused")
+		public String getName() {
+			return name;
+		}
 
-        public String getName() {
-            return name;
-        }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-        public void setName(String name) {
-            this.name = name;
-        }
+		public List<LitemallGoodsSpecification> getValueList() {
+			return valueList;
+		}
 
-        public List<LitemallGoodsSpecification> getValueList() {
-            return valueList;
-        }
-
-        public void setValueList(List<LitemallGoodsSpecification> valueList) {
-            this.valueList = valueList;
-        }
-    }
-
+		public void setValueList(List<LitemallGoodsSpecification> valueList) {
+			this.valueList = valueList;
+		}
+	}
 }

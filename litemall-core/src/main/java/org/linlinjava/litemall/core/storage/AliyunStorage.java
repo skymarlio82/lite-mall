@@ -1,9 +1,8 @@
+
 package org.linlinjava.litemall.core.storage;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
-import com.aliyun.oss.model.PutObjectRequest;
-import com.aliyun.oss.model.PutObjectResult;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
@@ -85,12 +84,11 @@ public class AliyunStorage implements Storage {
             objectMetadata.setContentLength(contentLength);
             objectMetadata.setContentType(contentType);
             // 对象键（Key）是对象在存储桶中的唯一标识。
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, keyName, inputStream, objectMetadata);
-            PutObjectResult putObjectResult = getOSSClient().putObject(putObjectRequest);
+//            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, keyName, inputStream, objectMetadata);
+//            PutObjectResult putObjectResult = getOSSClient().putObject(putObjectRequest);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
-
     }
 
     @Override
@@ -126,7 +124,6 @@ public class AliyunStorage implements Storage {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-
     }
 
     @Override

@@ -1,6 +1,6 @@
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
-import org.linlinjava.litemall.wx.util.wxpay.WXPayConstants.SignType;
+import org.linlinjava.litemall.wx.model.wxpay.WXPayConstants.SignType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;

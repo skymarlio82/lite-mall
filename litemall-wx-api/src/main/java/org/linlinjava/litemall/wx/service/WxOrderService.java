@@ -2,10 +2,8 @@
 package org.linlinjava.litemall.wx.service;
 
 import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
-import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
-import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -19,10 +17,8 @@ import org.dom4j.Element;
 import org.linlinjava.litemall.core.express.ExpressService;
 import org.linlinjava.litemall.core.express.dao.ExpressInfo;
 import org.linlinjava.litemall.core.notify.NotifyService;
-import org.linlinjava.litemall.core.notify.NotifyType;
 import org.linlinjava.litemall.core.qcode.QCodeService;
 import org.linlinjava.litemall.core.system.SystemConfig;
-import org.linlinjava.litemall.core.util.DateTimeUtil;
 import org.linlinjava.litemall.core.util.IpUtil;
 import org.linlinjava.litemall.core.util.JacksonUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
@@ -61,14 +57,14 @@ import org.springframework.util.Assert;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.AUTH_OPENID_UNACCESS;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.GROUPON_EXPIRED;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_COMMENTED;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_COMMENT_EXPIRED;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_INVALID;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_INVALID_OPERATION;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_PAY_FAIL;
-import static org.linlinjava.litemall.wx.util.wxpay.WxResponseCode.ORDER_UNKNOWN;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.AUTH_OPENID_UNACCESS;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.GROUPON_EXPIRED;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.ORDER_COMMENTED;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.ORDER_COMMENT_EXPIRED;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.ORDER_INVALID;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.ORDER_INVALID_OPERATION;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.ORDER_PAY_FAIL;
+import static org.linlinjava.litemall.wx.model.wxpay.WxResponseCode.ORDER_UNKNOWN;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -355,107 +351,97 @@ public class WxOrderService {
 			.max(new BigDecimal(0.00));
 		// 最终支付费用
 		BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice);
-	
-	Integer orderId = null;
-	LitemallOrder order = null;
-	// 订单
-	order = new LitemallOrder();
-	order.setUserId(userId);
-	order.setOrderSn(orderService.generateOrderSn(userId));
-	order.setOrderStatus(OrderUtil.STATUS_CREATE);
-	order.setConsignee(checkedAddress.getName());
-	order.setMobile(checkedAddress.getTel());
-	order.setMessage(message);
-	String detailedAddress = checkedAddress.getProvince() + checkedAddress.getCity() + checkedAddress.getCounty() + " " + checkedAddress.getAddressDetail();
-	order.setAddress(detailedAddress);
-	order.setGoodsPrice(checkedGoodsPrice);
-	order.setFreightPrice(freightPrice);
-	order.setCouponPrice(couponPrice);
-	order.setIntegralPrice(integralPrice);
-	order.setOrderPrice(orderTotalPrice);
-	order.setActualPrice(actualPrice);
-	
-	// 有团购活动
-	if (grouponRules != null) {
-	    order.setGrouponPrice(grouponPrice);    //  团购价格
-	} else {
-	    order.setGrouponPrice(new BigDecimal(0.00));    //  团购价格
-	}
-	
-	// 添加订单表项
-	orderService.add(order);
-	orderId = order.getId();
-	
-	// 添加订单商品表项
-	for (LitemallCart cartGoods : checkedGoodsList) {
-	    // 订单商品
-	    LitemallOrderGoods orderGoods = new LitemallOrderGoods();
-	    orderGoods.setOrderId(order.getId());
-	    orderGoods.setGoodsId(cartGoods.getGoodsId());
-	    orderGoods.setGoodsSn(cartGoods.getGoodsSn());
-	    orderGoods.setProductId(cartGoods.getProductId());
-	    orderGoods.setGoodsName(cartGoods.getGoodsName());
-	    orderGoods.setPicUrl(cartGoods.getPicUrl());
-	    orderGoods.setPrice(cartGoods.getPrice());
-	    orderGoods.setNumber(cartGoods.getNumber());
-	    orderGoods.setSpecifications(cartGoods.getSpecifications());
-	    orderGoods.setAddTime(LocalDateTime.now());
-	
-	    orderGoodsService.add(orderGoods);
-	}
-	
-	// 删除购物车里面的商品信息
-	cartService.clearGoods(userId);
-	
-	// 商品货品数量减少
-	for (LitemallCart checkGoods : checkedGoodsList) {
-	    Integer productId = checkGoods.getProductId();
-	    LitemallGoodsProduct product = productService.findById(productId);
-	
-	    Integer remainNumber = product.getNumber() - checkGoods.getNumber();
-	    if (remainNumber < 0) {
-	        throw new RuntimeException("下单的商品货品数量大于库存量");
-	}
-	if (productService.reduceStock(productId, checkGoods.getNumber()) == 0) {
-	    throw new RuntimeException("商品货品库存减少失败");
-	    }
-	}
-	
-	// 如果使用了优惠券，设置优惠券使用状态
-	if (couponId != 0 && couponId != -1) {
-	    LitemallCouponUser couponUser = couponUserService.queryOne(userId, couponId);
-	    couponUser.setStatus(CouponUserConstant.STATUS_USED);
-	    couponUser.setUsedTime(LocalDateTime.now());
-	    couponUser.setOrderId(orderId);
-	    couponUserService.update(couponUser);
-	}
-	
-	//如果是团购项目，添加团购信息
-	if (grouponRulesId != null && grouponRulesId > 0) {
-	    LitemallGroupon groupon = new LitemallGroupon();
-	    groupon.setOrderId(orderId);
-	    groupon.setPayed(false);
-	    groupon.setUserId(userId);
-	    groupon.setRulesId(grouponRulesId);
-	
-	    //参与者
-	if (grouponLinkId != null && grouponLinkId > 0) {
-	    //参与的团购记录
-	        LitemallGroupon baseGroupon = grouponService.queryById(grouponLinkId);
-	        groupon.setCreatorUserId(baseGroupon.getCreatorUserId());
-	        groupon.setGrouponId(grouponLinkId);
-	        groupon.setShareUrl(baseGroupon.getShareUrl());
-	    } else {
-	        groupon.setCreatorUserId(userId);
-	        groupon.setGrouponId(0);
-	    }
-	
-	    grouponService.createGroupon(groupon);
-	}
-	
-	Map<String, Object> data = new HashMap<>();
-	data.put("orderId", orderId);
-	    return ResponseUtil.ok(data);
+		Integer orderId = null;
+		LitemallOrder order = null;
+		// 订单
+		order = new LitemallOrder();
+		order.setUserId(userId);
+		order.setOrderSn(orderService.generateOrderSn(userId));
+		order.setOrderStatus(OrderUtil.STATUS_CREATE);
+		order.setConsignee(checkedAddress.getName());
+		order.setMobile(checkedAddress.getTel());
+		order.setMessage(message);
+		String detailedAddress = checkedAddress.getProvince() + 
+			checkedAddress.getCity() + checkedAddress.getCounty() + " " + checkedAddress.getAddressDetail();
+		order.setAddress(detailedAddress);
+		order.setGoodsPrice(checkedGoodsPrice);
+		order.setFreightPrice(freightPrice);
+		order.setCouponPrice(couponPrice);
+		order.setIntegralPrice(integralPrice);
+		order.setOrderPrice(orderTotalPrice);
+		order.setActualPrice(actualPrice);
+		// 有团购活动
+		if (grouponRules != null) {
+			// 团购价格
+			order.setGrouponPrice(grouponPrice);
+		} else {
+			// 团购价格
+			order.setGrouponPrice(new BigDecimal(0.00));
+		}
+		// 添加订单表项
+		orderService.add(order);
+		orderId = order.getId();
+		// 添加订单商品表项
+		for (LitemallCart cartGoods : checkedGoodsList) {
+			// 订单商品
+			LitemallOrderGoods orderGoods = new LitemallOrderGoods();
+			orderGoods.setOrderId(order.getId());
+			orderGoods.setGoodsId(cartGoods.getGoodsId());
+			orderGoods.setGoodsSn(cartGoods.getGoodsSn());
+			orderGoods.setProductId(cartGoods.getProductId());
+			orderGoods.setGoodsName(cartGoods.getGoodsName());
+			orderGoods.setPicUrl(cartGoods.getPicUrl());
+			orderGoods.setPrice(cartGoods.getPrice());
+			orderGoods.setNumber(cartGoods.getNumber());
+			orderGoods.setSpecifications(cartGoods.getSpecifications());
+			orderGoods.setAddTime(LocalDateTime.now());
+			orderGoodsService.add(orderGoods);
+		}
+		// 删除购物车里面的商品信息
+		cartService.clearGoods(userId);
+		// 商品货品数量减少
+		for (LitemallCart checkGoods : checkedGoodsList) {
+			Integer productId = checkGoods.getProductId();
+			LitemallGoodsProduct product = productService.findById(productId);
+			Integer remainNumber = product.getNumber() - checkGoods.getNumber();
+			if (remainNumber < 0) {
+				throw new RuntimeException("下单的商品货品数量大于库存量");
+			}
+			if (productService.reduceStock(productId, checkGoods.getNumber()) == 0) {
+				throw new RuntimeException("商品货品库存减少失败");
+			}
+		}
+		// 如果使用了优惠券，设置优惠券使用状态
+		if (couponId != 0 && couponId != -1) {
+			LitemallCouponUser couponUser = couponUserService.queryOne(userId, couponId);
+			couponUser.setStatus(CouponUserConstant.STATUS_USED);
+			couponUser.setUsedTime(LocalDateTime.now());
+			couponUser.setOrderId(orderId);
+			couponUserService.update(couponUser);
+		}
+		// 如果是团购项目，添加团购信息
+		if (grouponRulesId != null && grouponRulesId > 0) {
+			LitemallGroupon groupon = new LitemallGroupon();
+			groupon.setOrderId(orderId);
+			groupon.setPayed(false);
+			groupon.setUserId(userId);
+			groupon.setRulesId(grouponRulesId);
+			// 参与者
+			if (grouponLinkId != null && grouponLinkId > 0) {
+				// 参与的团购记录
+				LitemallGroupon baseGroupon = grouponService.queryById(grouponLinkId);
+				groupon.setCreatorUserId(baseGroupon.getCreatorUserId());
+				groupon.setGrouponId(grouponLinkId);
+				groupon.setShareUrl(baseGroupon.getShareUrl());
+			} else {
+				groupon.setCreatorUserId(userId);
+				groupon.setGrouponId(0);
+			}
+			grouponService.createGroupon(groupon);
+		}
+		Map<String, Object> data = new HashMap<>();
+		data.put("orderId", orderId);
+		return ResponseUtil.ok(data);
 	}
 
     /**
@@ -656,8 +642,8 @@ public class WxOrderService {
 		Element elemTransactionId = root.element("transaction_id");
 		String payId = elemTransactionId.getText();
 		// 分转化成元
-		Element elemTotalFee = root.element("total_fee");
-		String totalFee = BaseWxPayResult.fenToYuan(Integer.valueOf(elemTotalFee.getText()));
+//		Element elemTotalFee = root.element("total_fee");
+//		String totalFee = BaseWxPayResult.fenToYuan(Integer.valueOf(elemTotalFee.getText()));
 		LitemallOrder order = orderService.findBySn(orderSn);
 		if (order == null) {
 			return WxPayNotifyResponse.fail("订单不存在 sn=" + orderSn);
@@ -958,5 +944,4 @@ public class WxOrderService {
 
         return ResponseUtil.ok();
     }
-
 }

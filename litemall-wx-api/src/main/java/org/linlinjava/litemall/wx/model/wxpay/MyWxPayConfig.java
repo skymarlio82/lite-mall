@@ -1,17 +1,21 @@
 
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import org.linlinjava.litemall.wx.config.MyWxPayProperties;
+
 public class MyWxPayConfig extends WXPayConfig {
 
-    private byte[] certData;
+	private MyWxPayProperties props = null;
+    private byte[] certData = null;
 
-    public MyWxPayConfig() throws Exception {
-        String certPath = "/root/software/1544571151_20200329_cert/apiclient_cert.p12";
+    public MyWxPayConfig(MyWxPayProperties props) throws Exception {
+    	this.props = props;
+        String certPath = props.getKeypath();
         File file = new File(certPath);
         InputStream certStream = new FileInputStream(file);
         this.certData = new byte[(int) file.length()];
@@ -20,15 +24,15 @@ public class MyWxPayConfig extends WXPayConfig {
     }
 
     public String getAppID() {
-        return "wxba3211abca2a188c";
+        return this.props.getAppid();
     }
 
     public String getMchID() {
-        return "1544571151";
+        return this.props.getMchid();
     }
 
     public String getKey() {
-        return "10c57d4598c54704873ec455722c9876";
+        return this.props.getMchkey();
     }
 
     public InputStream getCertStream() {

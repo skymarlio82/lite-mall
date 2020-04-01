@@ -1,3 +1,4 @@
+
 package org.linlinjava.litemall.db;
 
 import org.junit.Test;
@@ -12,11 +13,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class DbConfigTest {
-    @Autowired
-    Environment environment;
 
-    @Test
-    public void test() {
-        System.out.println(environment.getProperty("spring.datasource.druid.url"));
-    }
+	@Autowired
+	Environment environment;
+	
+	@Test
+	public void test() {
+		System.out.println(environment.getProperty("spring.datasource.druid.url"));
+	}
 }

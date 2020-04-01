@@ -1,0 +1,8 @@
+litemall:
+  wxpay:
+    appid: wxba3211abca2a188c
+    mchid: 1544571151
+    mchkey: 10c57d4598c54704873ec455722c9876
+    notifyurl: https://www.sky888.cn/api/wx/order/pay-notify
+    keypath: /root/software/1544571151_20200329_cert/apiclient_cert.p12
+    ipaddress: 47.94.142.113

@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.vo.RegionVo;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.domain.LitemallRegion;
@@ -20,7 +19,6 @@ import java.util.List;
 @RequestMapping("/admin/region")
 @Validated
 public class AdminRegionController {
-    private final Log logger = LogFactory.getLog(AdminRegionController.class);
 
     @Autowired
     private LitemallRegionService regionService;

@@ -1,12 +1,10 @@
+
 package org.linlinjava.litemall.wx.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.util.RegexUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.domain.LitemallAddress;
 import org.linlinjava.litemall.db.service.LitemallAddressService;
-import org.linlinjava.litemall.db.service.LitemallRegionService;
 import org.linlinjava.litemall.wx.annotation.LoginUser;
 import org.linlinjava.litemall.wx.service.GetRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +26,9 @@ import java.util.List;
 @RequestMapping("/wx/address")
 @Validated
 public class WxAddressController extends GetRegionService {
-    private final Log logger = LogFactory.getLog(WxAddressController.class);
 
     @Autowired
     private LitemallAddressService addressService;
-
-    @Autowired
-    private LitemallRegionService regionService;
 
     /**
      * 用户收货地址列表

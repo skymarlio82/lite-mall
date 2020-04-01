@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
@@ -28,7 +27,6 @@ import static org.linlinjava.litemall.admin.util.AdminResponseCode.*;
 @RequestMapping("/admin/admin")
 @Validated
 public class AdminAdminController {
-    private final Log logger = LogFactory.getLog(AdminAdminController.class);
 
     @Autowired
     private LitemallAdminService adminService;

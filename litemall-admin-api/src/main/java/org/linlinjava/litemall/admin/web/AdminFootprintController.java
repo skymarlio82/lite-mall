@@ -1,7 +1,5 @@
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.core.util.ResponseUtil;
@@ -22,7 +20,6 @@ import java.util.List;
 @RequestMapping("/admin/footprint")
 @Validated
 public class AdminFootprintController {
-    private final Log logger = LogFactory.getLog(AdminFootprintController.class);
 
     @Autowired
     private LitemallFootprintService footprintService;

@@ -4,12 +4,10 @@
       <van-icon :name="statusIcon" :class="statusClass"/>
       <div>{{statusText}}</div>
     </div>
-
     <div class="status_text" v-if="isSuccess">
       <span class="red">3秒</span>跳转订单
     </div>
     <div class="status_text" v-else>系统繁忙, 支付遇到问题, 请您稍后再试!</div>
-
     <div class="status_goLink">
       <router-link class="red" :to="{name: 'user'}">查看订单
         <van-icon name="arrow"/>

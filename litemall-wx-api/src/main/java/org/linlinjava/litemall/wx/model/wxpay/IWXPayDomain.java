@@ -1,4 +1,4 @@
-package org.linlinjava.litemall.wx.util.wxpay;
+package org.linlinjava.litemall.wx.model.wxpay;
 
 /**
  * 域名管理，实现主备域名自动切换

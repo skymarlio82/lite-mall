@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.wx.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.storage.StorageService;
 import org.linlinjava.litemall.core.util.CharUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
@@ -30,84 +29,85 @@ import java.io.IOException;
 @RequestMapping("/wx/storage")
 @Validated
 public class WxStorageController {
-    private final Log logger = LogFactory.getLog(WxStorageController.class);
 
-    @Autowired
-    private StorageService storageService;
-    @Autowired
-    private LitemallStorageService litemallStorageService;
+	@Autowired
+	private StorageService storageService;
 
-    private String generateKey(String originalFilename) {
-        int index = originalFilename.lastIndexOf('.');
-        String suffix = originalFilename.substring(index);
+	@Autowired
+	private LitemallStorageService litemallStorageService;
 
-        String key = null;
-        LitemallStorage storageInfo = null;
+	@SuppressWarnings("unused")
+	private String generateKey(String originalFilename) {
+		int index = originalFilename.lastIndexOf('.');
+		String suffix = originalFilename.substring(index);
+		String key = null;
+		LitemallStorage storageInfo = null;
+		do {
+			key = CharUtil.getRandomString(20) + suffix;
+			storageInfo = litemallStorageService.findByKey(key);
+		} while (storageInfo != null);
+		return key;
+	}
 
-        do {
-            key = CharUtil.getRandomString(20) + suffix;
-            storageInfo = litemallStorageService.findByKey(key);
-        } while (storageInfo != null);
+	@PostMapping("/upload")
+	public Object upload(@RequestParam("file") MultipartFile file) throws IOException {
+		String originalFilename = file.getOriginalFilename();
+		LitemallStorage litemallStorage = storageService.store(file.getInputStream(),
+			file.getSize(),
+			file.getContentType(),
+			originalFilename);
+		return ResponseUtil.ok(litemallStorage);
+	}
 
-        return key;
-    }
+	/**
+	 * 访问存储对象
+	 *
+	 * @param key 存储对象key
+	 * @return
+	 */
+	@GetMapping("/fetch/{key:.+}")
+	public ResponseEntity<Resource> fetch(@PathVariable String key) {
+		LitemallStorage litemallStorage = litemallStorageService.findByKey(key);
+		if (key == null) {
+			return ResponseEntity.notFound().build();
+		}
+		if (key.contains("../")) {
+			return ResponseEntity.badRequest().build();
+		}
+		String type = litemallStorage.getType();
+		MediaType mediaType = MediaType.parseMediaType(type);
+		Resource file = storageService.loadAsResource(key);
+		if (file == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().contentType(mediaType).body(file);
+	}
 
-    @PostMapping("/upload")
-    public Object upload(@RequestParam("file") MultipartFile file) throws IOException {
-        String originalFilename = file.getOriginalFilename();
-        LitemallStorage litemallStorage = storageService.store(file.getInputStream(), file.getSize(),
-            file.getContentType(), originalFilename);
-        return ResponseUtil.ok(litemallStorage);
-    }
-
-    /**
-     * 访问存储对象
-     *
-     * @param key 存储对象key
-     * @return
-     */
-    @GetMapping("/fetch/{key:.+}")
-    public ResponseEntity<Resource> fetch(@PathVariable String key) {
-        LitemallStorage litemallStorage = litemallStorageService.findByKey(key);
-        if (key == null) {
-            return ResponseEntity.notFound().build();
-        }
-        if (key.contains("../")) {
-            return ResponseEntity.badRequest().build();
-        }
-        String type = litemallStorage.getType();
-        MediaType mediaType = MediaType.parseMediaType(type);
-
-        Resource file = storageService.loadAsResource(key);
-        if (file == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().contentType(mediaType).body(file);
-    }
-
-    /**
-     * 访问存储对象
-     *
-     * @param key 存储对象key
-     * @return
-     */
-    @GetMapping("/download/{key:.+}")
-    public ResponseEntity<Resource> download(@PathVariable String key) {
-        LitemallStorage litemallStorage = litemallStorageService.findByKey(key);
-        if (key == null) {
-            return ResponseEntity.notFound().build();
-        }
-        if (key.contains("../")) {
-            return ResponseEntity.badRequest().build();
-        }
-        String type = litemallStorage.getType();
-        MediaType mediaType = MediaType.parseMediaType(type);
-        Resource file = storageService.loadAsResource(key);
-        if (file == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().contentType(mediaType)
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-            .body(file);
-    }
+	/**
+	 * 访问存储对象
+	 *
+	 * @param key 存储对象key
+	 * @return
+	 */
+	@GetMapping("/download/{key:.+}")
+	public ResponseEntity<Resource> download(@PathVariable String key) {
+		LitemallStorage litemallStorage = litemallStorageService.findByKey(key);
+		if (key == null) {
+			return ResponseEntity.notFound().build();
+		}
+		if (key.contains("../")) {
+			return ResponseEntity.badRequest().build();
+		}
+		String type = litemallStorage.getType();
+		MediaType mediaType = MediaType.parseMediaType(type);
+		Resource file = storageService.loadAsResource(key);
+		if (file == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity
+			.ok()
+			.contentType(mediaType)
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+			.body(file);
+	}
 }

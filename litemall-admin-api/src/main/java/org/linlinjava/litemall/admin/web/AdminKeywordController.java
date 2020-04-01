@@ -1,7 +1,6 @@
+
 package org.linlinjava.litemall.admin.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.core.util.ResponseUtil;
@@ -21,8 +20,6 @@ import java.util.List;
 @RequestMapping("/admin/keyword")
 @Validated
 public class AdminKeywordController {
-    private final Log logger = LogFactory.getLog(AdminKeywordController.class);
-
     @Autowired
     private LitemallKeywordService keywordService;
 
