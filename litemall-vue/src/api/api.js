@@ -353,10 +353,19 @@ export function orderWxQrCode(query) {
   });
 }
 
-const OrderWxPayResult='wx/order/wxpayresult'; //申请QrCode
+const OrderWxPayResult='wx/order/wxpayresult'; //check pay result
 export function orderWxPayResult(query) {
   return request({
     url: OrderWxPayResult,
+    method: 'get',
+    params: query
+  });
+}
+
+const OrderWxPayDummy='wx/order/wxpaydummy'; //pay dummy
+export function orderWxPayDummy(query) {
+  return request({
+    url: OrderWxPayDummy,
     method: 'get',
     params: query
   });

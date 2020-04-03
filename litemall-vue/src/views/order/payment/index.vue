@@ -29,13 +29,14 @@
         </van-cell-group>
       </van-radio-group>
     </div>
-    <van-button class="pay_submit" @click="pay" type="primary" bottomAction>支付结果</van-button>
+    <!-- <van-button class="pay_submit" @click="pay" type="primary" bottomAction>支付结果</van-button> -->
+    <van-button class="pay_submit" @click="try2Pay" type="primary" bottomAction>去支付</van-button>
   </div>
 </template>
 
 <script>
 import { Radio, RadioGroup, Dialog } from 'vant';
-import { orderDetail, orderWxQrCode, orderWxPayResult, orderPrepay } from '@/api/api';
+import { orderDetail, orderWxQrCode, orderWxPayResult, orderWxPayDummy, orderPrepay } from '@/api/api';
 import _ from 'lodash';
 
 export default {
@@ -86,6 +87,14 @@ export default {
           }
         });
       }, 3000);
+    },
+    try2Pay() {
+      orderWxPayDummy({orderId: this.orderId}).then(res => {
+        // window.location.assign("http://www.changchunamy.com?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice);
+        let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
+        alert(url);
+        window.location.assign(url);
+      });
     }
   },
   components: {
