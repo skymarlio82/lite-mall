@@ -944,4 +944,23 @@ public class WxOrderService {
 
         return ResponseUtil.ok();
     }
+
+	@Transactional
+	public void payDummy(Integer orderId) {
+		LitemallOrder order = orderService.findById(orderId);
+		order.setPayId("666");
+		order.setPayTime(LocalDateTime.now());
+		order.setOrderStatus(OrderUtil.STATUS_PAY);
+		if (orderService.updateWithOptimisticLocker(order) == 0) {
+			order = orderService.findById(orderId);
+			int updated = 0;
+			if (OrderUtil.isAutoCancelStatus(order)) {
+				order.setPayId("666");
+				order.setPayTime(LocalDateTime.now());
+				order.setOrderStatus(OrderUtil.STATUS_PAY);
+				updated = orderService.updateWithOptimisticLocker(order);
+				System.out.println("updated=" + updated);
+			}
+		}
+	}
 }

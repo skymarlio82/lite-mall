@@ -194,4 +194,10 @@ public class WxOrderController {
 		Map<String, String> resp = myWxPayService.checkWxPayment(orderId);
 		return ResponseUtil.ok(resp);	
 	}
+
+	@GetMapping("wxpaydummy")
+	public Object payDummy(@NotNull Integer orderId) throws Exception {
+		wxOrderService.payDummy(orderId);
+		return ResponseUtil.ok();
+	}
 }

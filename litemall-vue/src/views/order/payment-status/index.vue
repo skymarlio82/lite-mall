@@ -18,6 +18,7 @@
 
 <script>
 export default {
+
   name: 'payment-status',
 
   props: {

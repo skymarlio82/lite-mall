@@ -169,8 +169,11 @@ public class WxAuthController {
 		String mobile = JacksonUtil.parseString(body, "mobile");
 		String code = JacksonUtil.parseString(body, "code");
 		String wxCode = JacksonUtil.parseString(body, "wxCode");
-		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(mobile)
-				|| StringUtils.isEmpty(wxCode) || StringUtils.isEmpty(code)) {
+		if (StringUtils.isEmpty(username) 
+			|| StringUtils.isEmpty(password) 
+			|| StringUtils.isEmpty(mobile)
+			|| StringUtils.isEmpty(wxCode) 
+			|| StringUtils.isEmpty(code)) {
 			return ResponseUtil.badArgument();
 		}
 		List<LitemallUser> userList = userService.queryByUsername(username);
@@ -217,7 +220,7 @@ public class WxAuthController {
 		user.setMobile(mobile);
 		user.setWeixinOpenid(openId);
 		user.setAvatar(
-				"https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64");
+			"https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64");
 		user.setNickname(username);
 		user.setGender((byte) 0);
 		user.setUserLevel((byte) 0);

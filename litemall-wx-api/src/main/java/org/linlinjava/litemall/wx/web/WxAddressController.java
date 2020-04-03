@@ -27,23 +27,23 @@ import java.util.List;
 @Validated
 public class WxAddressController extends GetRegionService {
 
-    @Autowired
-    private LitemallAddressService addressService;
+	@Autowired
+	private LitemallAddressService addressService;
 
-    /**
-     * 用户收货地址列表
-     *
-     * @param userId 用户ID
-     * @return 收货地址列表
-     */
-    @GetMapping("list")
-    public Object list(@LoginUser Integer userId) {
-        if (userId == null) {
-            return ResponseUtil.unlogin();
-        }
-        List<LitemallAddress> addressList = addressService.queryByUid(userId);
-        return ResponseUtil.okList(addressList);
-    }
+	/**
+	 * 用户收货地址列表
+	 *
+	 * @param userId 用户ID
+	 * @return 收货地址列表
+	 */
+	@GetMapping("list")
+	public Object list(@LoginUser Integer userId) {
+		if (userId == null) {
+			return ResponseUtil.unlogin();
+		}
+		List<LitemallAddress> addressList = addressService.queryByUid(userId);
+		return ResponseUtil.okList(addressList);
+	}
 
     /**
      * 收货地址详情
@@ -57,7 +57,6 @@ public class WxAddressController extends GetRegionService {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-
         LitemallAddress address = addressService.query(userId, id);
         if (address == null) {
             return ResponseUtil.badArgumentValue();
@@ -70,7 +69,6 @@ public class WxAddressController extends GetRegionService {
         if (StringUtils.isEmpty(name)) {
             return ResponseUtil.badArgument();
         }
-
         // 测试收货手机号码是否正确
         String mobile = address.getTel();
         if (StringUtils.isEmpty(mobile)) {
@@ -79,32 +77,26 @@ public class WxAddressController extends GetRegionService {
         if (!RegexUtil.isMobileExact(mobile)) {
             return ResponseUtil.badArgument();
         }
-
         String province = address.getProvince();
         if (StringUtils.isEmpty(province)) {
             return ResponseUtil.badArgument();
         }
-
         String city = address.getCity();
         if (StringUtils.isEmpty(city)) {
             return ResponseUtil.badArgument();
         }
-
         String county = address.getCounty();
         if (StringUtils.isEmpty(county)) {
             return ResponseUtil.badArgument();
         }
-
         String areaCode = address.getAreaCode();
         if (StringUtils.isEmpty(areaCode)) {
             return ResponseUtil.badArgument();
         }
-
         String detailedAddress = address.getAddressDetail();
         if (StringUtils.isEmpty(detailedAddress)) {
             return ResponseUtil.badArgument();
         }
-
         Boolean isDefault = address.getIsDefault();
         if (isDefault == null) {
             return ResponseUtil.badArgument();
@@ -128,12 +120,10 @@ public class WxAddressController extends GetRegionService {
         if (error != null) {
             return error;
         }
-
         if (address.getIsDefault()) {
             // 重置其他收货地址的默认选项
             addressService.resetDefault(userId);
         }
-
         if (address.getId() == null || address.getId().equals(0)) {
             address.setId(null);
             address.setUserId(userId);
@@ -163,7 +153,6 @@ public class WxAddressController extends GetRegionService {
         if (id == null) {
             return ResponseUtil.badArgument();
         }
-
         addressService.delete(id);
         return ResponseUtil.ok();
     }

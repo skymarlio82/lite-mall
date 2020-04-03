@@ -55,7 +55,6 @@ public class WxBrandController {
 		if (entity == null) {
 			return ResponseUtil.badArgumentValue();
 		}
-
 		return ResponseUtil.ok(entity);
 	}
 }
