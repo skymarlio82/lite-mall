@@ -93,7 +93,7 @@ export default {
         // window.location.assign("http://www.changchunamy.com?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice);
         let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
         alert(url);
-        window.location.assign(url);
+        // window.location.assign(url);
       });
     }
   },
