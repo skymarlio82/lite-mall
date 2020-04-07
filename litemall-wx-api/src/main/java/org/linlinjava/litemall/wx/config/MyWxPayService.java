@@ -4,6 +4,8 @@ package org.linlinjava.litemall.wx.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.db.domain.LitemallOrder;
 import org.linlinjava.litemall.db.service.LitemallOrderService;
 import org.linlinjava.litemall.wx.model.wxpay.MyWxPayConfig;
@@ -11,6 +13,8 @@ import org.linlinjava.litemall.wx.model.wxpay.WXPay;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class MyWxPayService {
+
+	private final Log logger = LogFactory.getLog(MyWxPayService.class);
 
 	@Autowired
 	private LitemallOrderService orderService = null;
@@ -21,16 +25,17 @@ public class MyWxPayService {
 		this.props = props;
 	}
 
-	public Map<String, String> applyWxQrCode(Integer orderId, String body, Integer totalFee) throws Exception {
+	public Map<String, String> applyWxQrCode(Integer orderId) throws Exception {
 		MyWxPayConfig config = new MyWxPayConfig(props);
 		WXPay wxpay = new WXPay(config);
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("body", body);
+		data.put("body", "Jitao微信支付测试[上海行信科技]");
 		LitemallOrder order = orderService.findById(orderId);
 		data.put("out_trade_no", order.getOrderSn());
 		data.put("device_info", "");
 		data.put("fee_type", "CNY");
-		data.put("total_fee", String.valueOf(totalFee));
+		logger.debug("total_fee of order := " + order.getActualPrice());
+		data.put("total_fee", String.valueOf(1));
 		data.put("spbill_create_ip", props.getIpaddress());
 		data.put("notify_url", props.getNotifyurl());
 		// 此处指定为扫码支付
@@ -49,7 +54,7 @@ public class MyWxPayService {
 //			resp.put("mch_id", "1544571151");
 //			resp.put("return_code", "SUCCESS");
 //			resp.put("prepay_id", "wx3018001460125962633b2ac21091018200");
-			System.out.println("wxpay.unifiedOrder >> " + resp);
+			logger.debug("wxpay.unifiedOrder >> " + resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,7 +91,7 @@ public class MyWxPayService {
 //			resp.put("time_end", "20200330183424");
 //			resp.put("is_subscribe", "Y");
 //			resp.put("return_code", "SUCCESS");
-			System.out.println("wxpay.orderQuery >> " + resp);
+			logger.debug("wxpay.orderQuery >> " + resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

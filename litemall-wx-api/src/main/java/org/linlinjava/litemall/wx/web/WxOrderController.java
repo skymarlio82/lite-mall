@@ -180,7 +180,7 @@ public class WxOrderController {
 
 	@GetMapping("wxqrcode")
 	public Object applyQrCode(@NotNull Integer orderId) throws Exception {
-		Map<String, String> resp = myWxPayService.applyWxQrCode(orderId, "Jitao微信支付测试[上海行信科技]", 1);
+		Map<String, String> resp = myWxPayService.applyWxQrCode(orderId);
 		return ResponseUtil.ok(resp);	
 	}
 

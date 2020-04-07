@@ -41,6 +41,8 @@ import java.util.Map;
 @Validated
 public class WxAuthController {
 
+	private final static String DEFAULT_USER_AVATAR_URL = "https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64";
+
 	@Autowired
 	private LitemallUserService userService;
 
@@ -219,8 +221,7 @@ public class WxAuthController {
 		user.setPassword(encodedPassword);
 		user.setMobile(mobile);
 		user.setWeixinOpenid(openId);
-		user.setAvatar(
-			"https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64");
+		user.setAvatar(DEFAULT_USER_AVATAR_URL);
 		user.setNickname(username);
 		user.setGender((byte) 0);
 		user.setUserLevel((byte) 0);
