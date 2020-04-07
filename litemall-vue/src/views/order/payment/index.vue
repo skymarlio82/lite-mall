@@ -4,7 +4,7 @@
     <van-cell-group class="payment_group">
       <van-cell title="订单编号" :value="order.orderInfo.orderSn"/>
       <van-cell title="实付金额">
-        <span class="red">{{order.orderInfo.actualPrice *100 | yuan}}</span>
+        <span class="red">{{order.orderInfo.actualPrice*100 | yuan}}</span>
       </van-cell>
     </van-cell-group>
     <div class="pay_way_group">
@@ -24,7 +24,9 @@
             <van-radio name="wx"/>
           </van-cell>
           <van-cell>
-            <center><img :src="orderWsQrCodeUrl" alt="wx-qr-code" width="180" height="180" style=""></center>
+            <center>
+              <img :src="orderWsQrCodeUrl" v-show="!isWeixin" alt="wx-qr-code" width="180" height="180" style="">
+            </center>
           </van-cell>
         </van-cell-group>
       </van-radio-group>
@@ -50,7 +52,8 @@ export default {
       },
       orderId: 0,
       orderWsQrCodeUrl: '',
-      timer_obj: null
+      timer_obj: null,
+      isWeixin: false
     };
   },
   created() {
@@ -67,9 +70,12 @@ export default {
       });
     },
     applyOrderWxQrCode(orderId) {
-      orderWxQrCode({orderId: orderId}).then(res => {
-        this.orderWsQrCodeUrl = process.env.VUE_APP_BASE_API + 'wx/order/qrc?code_url=' + res.data.data.code_url;
-      });
+      this.isWeixin = navigator.userAgent.toLowerCase().indexOf('micromessenger') != -1;
+      if (!this.isWeixin) {
+        orderWxQrCode({orderId: orderId}).then(res => {
+          this.orderWsQrCodeUrl = process.env.VUE_APP_BASE_API + 'wx/order/qrc?code_url=' + res.data.data.code_url;
+        });
+      }
     },
     pay() {
       this.timer_obj = setInterval(() => {
@@ -89,12 +95,15 @@ export default {
       }, 3000);
     },
     try2Pay() {
-      orderWxPayDummy({orderId: this.orderId}).then(res => {
-        // window.location.assign("http://www.changchunamy.com?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice);
-        let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
-        alert(url);
-        // window.location.assign(url);
-      });
+      if (this.isWeixin) {
+        orderWxPayDummy({orderId: this.orderId}).then(res => {
+          // let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
+          let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=1";
+          window.location.assign(url);
+        });
+      } else {
+        this.pay();
+      }
     }
   },
   components: {
