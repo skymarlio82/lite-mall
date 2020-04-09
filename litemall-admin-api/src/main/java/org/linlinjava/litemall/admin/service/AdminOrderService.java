@@ -78,7 +78,7 @@ public class AdminOrderService {
      * 3. 设置订单退款确认状态；
      * 4. 订单商品库存回库。
      * <p>
-     * TODO
+     * 
      * 虽然接入了微信退款API，但是从安全角度考虑，建议开发者删除这里微信退款代码，采用以下两步走步骤：
      * 1. 管理员登录微信官方支付平台点击退款操作进行退款
      * 2. 管理员登录litemall管理后台点击退款操作进行订单状态修改和商品库存回库
@@ -152,7 +152,7 @@ public class AdminOrderService {
             }
         }
 
-        //TODO 发送邮件和短信通知，这里采用异步发送
+        // 发送邮件和短信通知，这里采用异步发送
         // 退款成功通知用户, 例如“您申请的订单退款 [ 单号:{1} ] 已成功，请耐心等待到账。”
         // 注意订单号只发后6位
         notifyService.notifySmsTemplate(order.getMobile(), NotifyType.REFUND,
@@ -170,7 +170,7 @@ public class AdminOrderService {
      * @param body 订单信息，{ orderId：xxx, shipSn: xxx, shipChannel: xxx }
      * @return 订单操作结果
      * 成功则 { errno: 0, errmsg: '成功' }
-     * 失败则 { errno: XXX, errmsg: XXX }
+     * 失败则 { errno: xxx, errmsg: xxx }
      */
     public Object ship(String body) {
         Integer orderId = JacksonUtil.parseInteger(body, "orderId");
@@ -198,7 +198,7 @@ public class AdminOrderService {
             return ResponseUtil.updatedDateExpired();
         }
 
-        //TODO 发送邮件和短信通知，这里采用异步发送
+        // 发送邮件和短信通知，这里采用异步发送
         // 发货会发送通知短信给用户:          *
         // "您的订单已经发货，快递公司 {1}，快递单 {2} ，请注意查收"
         notifyService.notifySmsTemplate(order.getMobile(), NotifyType.SHIP, new String[]{shipChannel, shipSn});
@@ -214,7 +214,7 @@ public class AdminOrderService {
      * @param body 订单信息，{ orderId：xxx }
      * @return 订单操作结果
      * 成功则 { errno: 0, errmsg: '成功' }
-     * 失败则 { errno: XXX, errmsg: XXX }
+     * 失败则 { errno: xxx, errmsg: xxx }
      */
     public Object reply(String body) {
         Integer commentId = JacksonUtil.parseInteger(body, "commentId");

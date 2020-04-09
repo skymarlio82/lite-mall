@@ -27,7 +27,6 @@ public class HttpUtil {
      * @param params 请求的参数集合
      * @return 远程资源的响应结果
      */
-    @SuppressWarnings("unused")
     public static String sendPost(String url, Map<String, String> params) {
         OutputStreamWriter out = null;
         BufferedReader in = null;

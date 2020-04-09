@@ -337,7 +337,7 @@ public class WxCartController {
 	 *
 	 * @param userId 用户ID
 	 * @param body   购物车商品信息， { productIds: xxx }
-	 * @return 购物车信息 成功则 { errno: 0, errmsg: '成功', data: xxx } 失败则 { errno: XXX, errmsg: XXX }
+	 * @return 购物车信息 成功则 { errno: 0, errmsg: '成功', data: xxx } 失败则 { errno: xxx, errmsg: xxx }
 	 */
 	@PostMapping("delete")
 	public Object delete(@LoginUser Integer userId, @RequestBody String body) {
