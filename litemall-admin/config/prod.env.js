@@ -1,5 +1,5 @@
 module.exports = {
 	NODE_ENV : '"production"',
 	ENV_CONFIG : '"prod"',
-	BASE_API: '"https://www.skymarlio.com/admin-api"'
+	BASE_API: '"https://www.sky888.cn/admin-api"'
 }
