@@ -20,14 +20,14 @@
           <van-cell>
             <template slot="title">
               <img src="../../../assets/images/wx_pay.png" alt="微信支付" width="113" height="23">
-            </template>            
+            </template>
             <van-radio name="wx"/>
           </van-cell>
-          <van-cell>
+          <!-- <van-cell>
             <center>
               <img :src="orderWsQrCodeUrl" v-show="!isWeixin" alt="wx-qr-code" width="180" height="180" style="">
             </center>
-          </van-cell>
+          </van-cell> -->
         </van-cell-group>
       </van-radio-group>
     </div>
@@ -60,7 +60,7 @@ export default {
     if (_.has(this.$route.params, 'orderId')) {
       this.orderId = this.$route.params.orderId;
       this.getOrder(this.orderId);
-      this.applyOrderWxQrCode(this.orderId);
+      // this.applyOrderWxQrCode(this.orderId);
     }
   },
   methods: {
@@ -95,15 +95,15 @@ export default {
       }, 3000);
     },
     try2Pay() {
-      if (this.isWeixin) {
-        orderWxPayDummy({orderId: this.orderId}).then(res => {
-          // let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
-          let url = "http://www.changchunamy.com/Home/wxJsPayApi?orderId=" + this.order.orderInfo.orderSn + "&totalFee=1";
+      // if (this.isWeixin) {
+        // orderWxPayDummy({orderId: this.orderId}).then(res => {
+          // let url = "http://www.changchunamy.com/Home/wxPay?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
+          let url = "http://www.changchunamy.com/Home/wxPay?orderId=" + this.order.orderInfo.orderSn + "&totalFee=1";
           window.location.assign(url);
-        });
-      } else {
-        this.pay();
-      }
+        // });
+      // } else {
+      //   this.pay();
+      // }
     }
   },
   components: {
