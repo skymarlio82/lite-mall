@@ -175,6 +175,8 @@ public class WxOrderController {
 		return wxOrderService.comment(userId, body);
 	}
 
+	// =================================================================================================================
+
 	@Autowired
 	private MyWxPayService myWxPayService = null;
 
