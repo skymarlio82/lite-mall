@@ -13,6 +13,10 @@ public class MyWxPayProperties {
 	private String keypath;
 	private String ipaddress;
 
+	public MyWxPayProperties() {
+		
+	}
+
 	public String getAppid() {
 		return appid;
 	}
