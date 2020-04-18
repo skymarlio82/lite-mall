@@ -551,7 +551,8 @@ public class WxOrderService {
             int fee = 0;
             BigDecimal actualPrice = order.getActualPrice();
             fee = actualPrice.multiply(new BigDecimal(100)).intValue();
-            orderRequest.setTotalFee(fee);
+//            orderRequest.setTotalFee(fee);
+            orderRequest.setTotalFee(1);
             orderRequest.setSpbillCreateIp(IpUtil.getIpAddr(request));
 
             result = wxPayService.createOrder(orderRequest);

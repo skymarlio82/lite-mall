@@ -1,8 +1,8 @@
 litemall:
   # 开发者应该设置成自己的wx相关信息
   wx:
-    app-id: wxba3211abca2a188c
-    app-secret: 71c65ffcd1bc9f803be323665d330797
+    app-id: wx7852a432896eb0e7
+    app-secret: 4124052eab0ca68bcdc2dc0f31fb4886
     mch-id: 1544571151
     mch-key: 10c57d4598c54704873ec455722c9876
     notify-url: https://www.sky888.cn/api/wx/order/pay-notify
