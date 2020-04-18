@@ -1,7 +1,7 @@
 litemall:
   # 开发者应该设置成自己的wx相关信息
   wx:
-    app-id: wx7852a432896eb0e7
+    app-id: xxx
     app-secret: 4124052eab0ca68bcdc2dc0f31fb4886
     mch-id: 1544571151
     mch-key: 10c57d4598c54704873ec455722c9876
