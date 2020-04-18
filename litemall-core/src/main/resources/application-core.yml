@@ -1,13 +1,18 @@
 litemall:
   # 开发者应该设置成自己的wx相关信息
   wx:
-    app-id: xxx
+    # 微信公众号  AppId
+    #app-id: wx7852a432896eb0e7
+    # 微信公众号 AppSecret
+    #app-secret: 4124052eab0ca68bcdc2dc0f31fb4886
+    # 微信小程序 AppId
+    app-id: wx7852a432896eb0e7
+    # 微信小程序 AppSecret
     app-secret: 4124052eab0ca68bcdc2dc0f31fb4886
     mch-id: 1544571151
     mch-key: 10c57d4598c54704873ec455722c9876
     notify-url: https://www.sky888.cn/api/wx/order/pay-notify
-    # 商户证书文件路径
-    # 请参考“商户证书”一节 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
+    # 商户证书文件路径, 请参考“商户证书”一节 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
     key-path: /root/software/1544571151_20200329_cert/apiclient_cert.p12
   #通知相关配置
   notify:
@@ -20,8 +25,7 @@ litemall:
       password: win55d
       sendfrom: 1745277993@qq.com
       sendto: 1745277993@qq.com
-    # 短消息模版通知配置
-    # 短信息用于通知客户，例如发货短信通知，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
+    # 短消息模版通知配置: 短信息用于通知客户，例如发货短信通知，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
     sms:
       enable: false
       appid: 1400339017
@@ -35,8 +39,7 @@ litemall:
         templateId: 158002
       - name: refund
         templateId: 159447
-    # 微信模版通知配置
-    # 微信模版用于通知客户或者运营者，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
+    # 微信模版通知配置: 微信模版用于通知客户或者运营者，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
     wx:
       enable: false
       template:
@@ -95,8 +98,7 @@ litemall:
       accessKeyId: 111111
       accessKeySecret: xxxxxx
       bucketName: litemall
-    # 腾讯对象存储配置信息
-    # 请参考 https://cloud.tencent.com/document/product/436/6249
+    # 腾讯对象存储配置信息: 请参考 https://cloud.tencent.com/document/product/436/6249
     tencent:
       secretId: 111111
       secretKey: xxxxxx

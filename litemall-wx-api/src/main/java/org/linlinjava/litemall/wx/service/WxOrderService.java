@@ -106,49 +106,49 @@ public class WxOrderService {
 
 	@Autowired
 	private LitemallUserService userService;
-	
+
 	@Autowired
 	private LitemallOrderService orderService;
-	
+
 	@Autowired
 	private LitemallOrderGoodsService orderGoodsService;
-	
+
 	@Autowired
 	private LitemallAddressService addressService;
-	
+
 	@Autowired
 	private LitemallCartService cartService;
-	
+
 	@Autowired
 	private LitemallGoodsProductService productService;
-	
+
 	@Autowired
 	private WxPayService wxPayService;
-	
+
 	@Autowired
 	private NotifyService notifyService;
-	
+
 	@Autowired
 	private LitemallUserFormIdService formIdService;
-	
+
 	@Autowired
 	private LitemallGrouponRulesService grouponRulesService;
-	
+
 	@Autowired
 	private LitemallGrouponService grouponService;
-	
+
 	@Autowired
 	private QCodeService qCodeService;
-	
+
 	@Autowired
 	private ExpressService expressService;
-	
+
 	@Autowired
 	private LitemallCommentService commentService;
-	
+
 	@Autowired
 	private LitemallCouponUserService couponUserService;
-	
+
 	@Autowired
 	private CouponVerifyService couponVerifyService;
 
@@ -444,140 +444,128 @@ public class WxOrderService {
 		return ResponseUtil.ok(data);
 	}
 
-    /**
-     * 取消订单
-     * <p>
-     * 1. 检测当前订单是否能够取消；
-     * 2. 设置订单取消状态；
-     * 3. 商品货品库存恢复；
-     * 4. 优惠券；
-     * 5. 团购活动。
-     *
-     * @param userId 用户ID
-     * @param body   订单信息，{ orderId：xxx }
-     * @return 取消订单操作结果
-     */
-    @Transactional
-    public Object cancel(Integer userId, String body) {
-        if (userId == null) {
-            return ResponseUtil.unlogin();
-        }
-        Integer orderId = JacksonUtil.parseInteger(body, "orderId");
-        if (orderId == null) {
-            return ResponseUtil.badArgument();
-        }
+	/**
+	 * 取消订单
+	 * <p>
+	 * 1. 检测当前订单是否能够取消；
+	 * 2. 设置订单取消状态；
+	 * 3. 商品货品库存恢复；
+	 * 4. 优惠券；
+	 * 5. 团购活动。
+	 *
+	 * @param userId 用户ID
+	 * @param body   订单信息，{ orderId：xxx }
+	 * @return 取消订单操作结果
+	 */
+	@Transactional
+	public Object cancel(Integer userId, String body) {
+		if (userId == null) {
+			return ResponseUtil.unlogin();
+		}
+		Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+		if (orderId == null) {
+			return ResponseUtil.badArgument();
+		}
+		LitemallOrder order = orderService.findById(orderId);
+		if (order == null) {
+			return ResponseUtil.badArgumentValue();
+		}
+		if (!order.getUserId().equals(userId)) {
+			return ResponseUtil.badArgumentValue();
+		}
+		// 检测是否能够取消
+		OrderHandleOption handleOption = OrderUtil.build(order);
+		if (!handleOption.isCancel()) {
+			return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能取消");
+		}
+		// 设置订单已取消状态
+		order.setOrderStatus(OrderUtil.STATUS_CANCEL);
+		order.setEndTime(LocalDateTime.now());
+		if (orderService.updateWithOptimisticLocker(order) == 0) {
+			throw new RuntimeException("更新数据已失效");
+		}
+		// 商品货品数量增加
+		List<LitemallOrderGoods> orderGoodsList = orderGoodsService.queryByOid(orderId);
+		for (LitemallOrderGoods orderGoods : orderGoodsList) {
+		    Integer productId = orderGoods.getProductId();
+		    Short number = orderGoods.getNumber();
+			if (productService.addStock(productId, number) == 0) {
+				throw new RuntimeException("商品货品库存增加失败");
+			}
+		}
+	    return ResponseUtil.ok();
+	}
 
-        LitemallOrder order = orderService.findById(orderId);
-        if (order == null) {
-            return ResponseUtil.badArgumentValue();
-        }
-        if (!order.getUserId().equals(userId)) {
-            return ResponseUtil.badArgumentValue();
-        }
-
-        // 检测是否能够取消
-        OrderHandleOption handleOption = OrderUtil.build(order);
-        if (!handleOption.isCancel()) {
-            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能取消");
-        }
-
-        // 设置订单已取消状态
-        order.setOrderStatus(OrderUtil.STATUS_CANCEL);
-        order.setEndTime(LocalDateTime.now());
-        if (orderService.updateWithOptimisticLocker(order) == 0) {
-            throw new RuntimeException("更新数据已失效");
-        }
-
-        // 商品货品数量增加
-        List<LitemallOrderGoods> orderGoodsList = orderGoodsService.queryByOid(orderId);
-        for (LitemallOrderGoods orderGoods : orderGoodsList) {
-            Integer productId = orderGoods.getProductId();
-            Short number = orderGoods.getNumber();
-            if (productService.addStock(productId, number) == 0) {
-                throw new RuntimeException("商品货品库存增加失败");
-            }
-        }
-
-        return ResponseUtil.ok();
-    }
-
-    /**
-     * 付款订单的预支付会话标识
-     * <p>
-     * 1. 检测当前订单是否能够付款
-     * 2. 微信商户平台返回支付订单ID
-     * 3. 设置订单付款状态
-     *
-     * @param userId 用户ID
-     * @param body   订单信息，{ orderId：xxx }
-     * @return 支付订单ID
-     */
-    @Transactional
-    public Object prepay(Integer userId, String body, HttpServletRequest request) {
-        if (userId == null) {
-            return ResponseUtil.unlogin();
-        }
-        Integer orderId = JacksonUtil.parseInteger(body, "orderId");
-        if (orderId == null) {
-            return ResponseUtil.badArgument();
-        }
-
-        LitemallOrder order = orderService.findById(orderId);
-        if (order == null) {
-            return ResponseUtil.badArgumentValue();
-        }
-        if (!order.getUserId().equals(userId)) {
-            return ResponseUtil.badArgumentValue();
-        }
-
-        // 检测是否能够取消
-        OrderHandleOption handleOption = OrderUtil.build(order);
-        if (!handleOption.isPay()) {
-            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能支付");
-        }
-
-        LitemallUser user = userService.findById(userId);
-        String openid = user.getWeixinOpenid();
-        if (openid == null) {
-            return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
-        }
-        WxPayMpOrderResult result = null;
-        try {
-            WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
-            orderRequest.setOutTradeNo(order.getOrderSn());
-            orderRequest.setOpenid(openid);
-            orderRequest.setBody("订单：" + order.getOrderSn());
-            // 元转成分
-            int fee = 0;
-            BigDecimal actualPrice = order.getActualPrice();
-            fee = actualPrice.multiply(new BigDecimal(100)).intValue();
-//            orderRequest.setTotalFee(fee);
-            orderRequest.setTotalFee(1);
-            orderRequest.setSpbillCreateIp(IpUtil.getIpAddr(request));
-
-            result = wxPayService.createOrder(orderRequest);
-
-            //缓存prepayID用于后续模版通知
-            String prepayId = result.getPackageValue();
-            prepayId = prepayId.replace("prepay_id=", "");
-            LitemallUserFormid userFormid = new LitemallUserFormid();
-            userFormid.setOpenid(user.getWeixinOpenid());
-            userFormid.setFormid(prepayId);
-            userFormid.setIsprepay(true);
-            userFormid.setUseamount(3);
-            userFormid.setExpireTime(LocalDateTime.now().plusDays(7));
-            formIdService.addUserFormid(userFormid);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseUtil.fail(ORDER_PAY_FAIL, "订单不能支付");
-        }
-
-        if (orderService.updateWithOptimisticLocker(order) == 0) {
-            return ResponseUtil.updatedDateExpired();
-        }
-        return ResponseUtil.ok(result);
-    }
+	/**
+	 * 付款订单的预支付会话标识
+	 * <p>
+	 * 1. 检测当前订单是否能够付款
+	 * 2. 微信商户平台返回支付订单ID
+	 * 3. 设置订单付款状态
+	 *
+	 * @param userId 用户ID
+	 * @param body   订单信息，{ orderId：xxx }
+	 * @return 支付订单ID
+	 */
+	@Transactional
+	public Object prepay(Integer userId, String body, HttpServletRequest request) {
+		if (userId == null) {
+			return ResponseUtil.unlogin();
+		}
+		Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+		if (orderId == null) {
+			return ResponseUtil.badArgument();
+		}
+		LitemallOrder order = orderService.findById(orderId);
+		if (order == null) {
+			return ResponseUtil.badArgumentValue();
+		}
+		if (!order.getUserId().equals(userId)) {
+			return ResponseUtil.badArgumentValue();
+		}
+		// 检测是否能够取消
+		OrderHandleOption handleOption = OrderUtil.build(order);
+		if (!handleOption.isPay()) {
+			return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能支付");
+		}
+		LitemallUser user = userService.findById(userId);
+		String openid = user.getWeixinOpenid();
+		if (openid == null) {
+			return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
+		}
+		WxPayMpOrderResult result = null;
+		try {
+			WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
+			orderRequest.setOutTradeNo(order.getOrderSn());
+			orderRequest.setOpenid(openid);
+			orderRequest.setBody("订单：" + order.getOrderSn());
+			// 元转成分
+//			int fee = 0;
+//			BigDecimal actualPrice = order.getActualPrice();
+//			fee = actualPrice.multiply(new BigDecimal(100)).intValue();
+//			orderRequest.setTotalFee(fee);
+			orderRequest.setTotalFee(1);
+			orderRequest.setSpbillCreateIp(IpUtil.getIpAddr(request));
+			result = wxPayService.createOrder(orderRequest);
+			// 缓存prepayID用于后续模版通知
+			String prepayId = result.getPackageValue();
+			prepayId = prepayId.replace("prepay_id=", "");
+			LitemallUserFormid userFormid = new LitemallUserFormid();
+			userFormid.setOpenid(user.getWeixinOpenid());
+			userFormid.setFormid(prepayId);
+			userFormid.setIsprepay(true);
+			userFormid.setUseamount(3);
+			userFormid.setExpireTime(LocalDateTime.now().plusDays(7));
+			formIdService.addUserFormid(userFormid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseUtil.fail(ORDER_PAY_FAIL, "订单不能支付");
+		}
+		if (orderService.updateWithOptimisticLocker(order) == 0) {
+			return ResponseUtil.updatedDateExpired();
+		}
+		return ResponseUtil.ok(result);
+	}
 
 	/**
 	 * 微信付款成功或失败回调接口
