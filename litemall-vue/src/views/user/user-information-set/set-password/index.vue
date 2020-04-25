@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navi-back :pageName="'user-information'"/>
     <van-cell-group>
       <van-field label="新密码" v-model="password" type="password" placeholder="请输入新密码"/>
 			<van-field label="验证码" v-model="code" @click-icon="getCode" placeholder="请输入验证码">
@@ -21,6 +22,7 @@
 import { authCaptcha, authReset, authLogout } from '@/api/api';
 import { removeLocalStorage } from '@/utils/local-storage';
 import { Field } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   data: () => ({
@@ -62,10 +64,11 @@ export default {
           this.counting = false;
         });
       }
-    },
+    }
   },
   components: {
-    [Field.name]: Field
+    [Field.name]: Field,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

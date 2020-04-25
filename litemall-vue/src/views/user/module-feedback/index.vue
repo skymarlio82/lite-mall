@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navi-back :pageName="'user-server'"/>
     <van-cell-group title="反馈类型">
       <van-cell class="order-coupon" :title="type" is-link arrow-direction="down" @click="showList=true"/>
     </van-cell-group>
@@ -24,6 +25,7 @@
 
 <script>
 import { Field , Picker, Popup, Button } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { feedbackAdd } from '@/api/api';
 
 export default {
@@ -65,7 +67,8 @@ export default {
     [Field.name]: Field,
     [Popup.name]: Popup,
     [Button.name]: Button,
-    [Picker.name]: Picker
+    [Picker.name]: Picker,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

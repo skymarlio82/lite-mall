@@ -1,5 +1,6 @@
 <template>
   <div class="user_information">
+    <navi-back :pageName="'user'"/>
     <van-cell-group>
       <van-cell title="头像" class="cell_middle">
         <van-uploader :before-read="avatarBeforeRead" :afterRead="avatarAfterRead">
@@ -24,6 +25,7 @@
 
 <script>
 import { Uploader, Picker, Popup, Button } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { getLocalStorage, setLocalStorage, removeLocalStorage } from '@/utils/local-storage';
 import { authInfo, authLogout, authProfile } from '@/api/api';
 
@@ -105,7 +107,8 @@ export default {
     [Button.name]: Button,
     [Uploader.name]: Uploader,
     [Picker.name]: Picker,
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

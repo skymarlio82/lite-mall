@@ -1,5 +1,6 @@
 <template>
   <div class="order_list">
+    <navi-back :pageName="'user'"/>
     <van-tabs v-model="activeIndex" :swipe-threshold="5" @click="handleTabClick">
       <van-tab v-for="(tabTitle, index) in tabTitles" :title="tabTitle" :key="index">
         <van-list v-model="loading" :finished="finished" :immediate-check="false" finished-text="没有更多了"
@@ -49,6 +50,7 @@
 import { orderList, orderDelete, orderConfirm, orderCancel, orderRefund } from '@/api/api';
 import _ from 'lodash';
 import { Tab, Tabs, Panel, Card, List, Tag } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   name: 'order-list',
@@ -161,7 +163,8 @@ export default {
     [Panel.name]: Panel,
     [Card.name]: Card,
     [List.name]: List,
-    [Tag.name]: Tag
+    [Tag.name]: Tag,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

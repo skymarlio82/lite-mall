@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navi-back :pageName="'user'"/>
     <van-cell-group>
       <van-cell title="联系客服" @click="showKefu=true" isLink></van-cell>
       <van-cell title="意见反馈" to="/user/feedback" isLink></van-cell>
@@ -21,6 +22,7 @@
 
 <script>
 import { Popup, Cell, CellGroup } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   data() {
@@ -30,8 +32,9 @@ export default {
   },
   components: {
     [Popup.name]: Popup,
-    [Cell.name]: Cell, 
-    [CellGroup.name]: CellGroup    
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

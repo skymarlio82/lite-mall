@@ -1,48 +1,37 @@
 <template>
   <div class="item_search">
-    <form action="/search"
-          @submit="disabledSubmit">
-      <van-search placeholder="请输入商品名称"
-                  v-model="keyword"
-                  @search="enterSearch"
-                  autofocus />
+    <navi-back :pageName="'home'"/>
+    <form action="/search" @submit="disabledSubmit">
+      <van-search placeholder="请输入商品名称" v-model="keyword" @search="enterSearch" autofocus />
     </form>
     <div class="item_search_content">
       <div class="item_search_text clearfix">
         <div class="float-l">历史搜索</div>
-        <div class="float-r"
-             @click="clearHistory">
-          <van-icon name="lajitong"
-                    style="font-size: 12px;margin-right: 3px" />
-          清空历史记录
+        <div class="float-r" @click="clearHistory">
+          <van-icon name="lajitong" style="font-size: 12px;margin-right: 3px" />清空历史记录
         </div>
       </div>
       <div class="item_search_history">
-        <van-tag plain
-                 v-for="(his, i) in wordHistory"
-                 :key="i"
-                 @click="clickSearch(his)">{{his}}</van-tag>
+        <van-tag plain v-for="(his, i) in wordHistory" :key="i" @click="clickSearch(his)">{{his}}</van-tag>
       </div>
     </div>
-    <!-- <van-list v-model="loading"
-              :finished="finished"
-              :immediate-check="false"
-              @load="loadMore"> -->
-      <van-card v-for="(item, i) in list"
-                :key="i"
-                :desc="item.brief"
-                :title="item.name"
-                :thumb="item.picUrl"
-                :price="item.retailPrice"
-                :origin-price="item.counterPrice"
-                @click="itemClick(item.id)" />
+    <!-- <van-list v-model="loading" :finished="finished" :immediate-check="false" @load="loadMore"> -->
+    <van-card v-for="(item, i) in list"
+      :key="i"
+      :desc="item.brief"
+      :title="item.name"
+      :thumb="item.picUrl"
+      :price="item.retailPrice"
+      :origin-price="item.counterPrice"
+      @click="itemClick(item.id)" />
     <!-- </van-list> -->
-    <is-empty v-if="!list.length">抱歉,没有找到符合条件商品</is-empty>
+    <is-empty v-if="!list.length">抱歉, 没有找到符合条件商品</is-empty>
   </div>
 </template>
 
 <script>
 import { Card, Search, Tag, List } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { goodsList } from '@/api/api';
 import IsEmpty from '@/components/is-empty/';
 
@@ -142,7 +131,8 @@ export default {
     [Card.name]: Card,
     [Tag.name]: Tag,
     [List.name]: List,
-    [IsEmpty.name]: IsEmpty
+    [IsEmpty.name]: IsEmpty,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

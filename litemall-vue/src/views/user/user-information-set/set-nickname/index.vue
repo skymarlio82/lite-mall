@@ -1,5 +1,6 @@
 <template>
   <div class="set_nickname">
+    <navi-back :pageName="'user-information'"/>
     <van-cell-group>
       <van-field v-model="nickName" label="昵称"/>
     </van-cell-group>
@@ -12,6 +13,7 @@
 <script>
 import { authProfile } from '@/api/api';
 import { Field } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   data() {
@@ -40,7 +42,8 @@ export default {
     }
   },
   components: {
-    [Field.name]: Field
+    [Field.name]: Field,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

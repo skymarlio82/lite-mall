@@ -1,5 +1,6 @@
 <template>
   <div class="goods_brand">
+    <navi-back :pageName="'brandList'"/>
     <div class="brand-info">
       <div class="name">
         <img class="img"
@@ -34,6 +35,7 @@
 <script>
 import { brandDetail, goodsList } from '@/api/api';
 import { Card, Row, Col } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   props: {
@@ -72,7 +74,8 @@ export default {
   components: {
     [Card.name]: Card,
     [Row.name]: Row,
-    [Col.name]: Col
+    [Col.name]: Col,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

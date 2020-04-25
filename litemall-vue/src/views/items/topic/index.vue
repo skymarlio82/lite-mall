@@ -1,5 +1,6 @@
 <template>
   <div class="goods_topic">
+    <navi-back :pageName="'topicList'"/>
     <div class="topic-detail"
          v-html="topic.content">
     </div>
@@ -23,6 +24,7 @@
 <script>
 import { topicDetail, topicRelated } from '@/api/api';
 import { Card, Row, Col } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   props: {
@@ -63,7 +65,8 @@ export default {
   components: {
     [Card.name]: Card,
     [Row.name]: Row,
-    [Col.name]: Col
+    [Col.name]: Col,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

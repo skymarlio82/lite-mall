@@ -1,5 +1,6 @@
 <template>
   <div class="goods_topic_list">
+    <navi-back :pageName="'home'"/>
     <van-list v-model="loading"
               :finished="finished"
               :immediate-check="false"
@@ -31,6 +32,7 @@
 <script>
 import { topicList } from '@/api/api';
 import { List } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   data() {
@@ -70,7 +72,8 @@ export default {
   },
 
   components: {
-    [List.name]: List
+    [List.name]: List,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

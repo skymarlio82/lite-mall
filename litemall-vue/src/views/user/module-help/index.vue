@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navi-back :pageName="'user-server'"/>
     <van-collapse :accordion="true" v-model="activeNames">
       <van-collapse-item :title="issue.question" :name="index" v-for="(issue, index) in issueList" :key="index">
         {{issue.answer}}
@@ -10,6 +11,7 @@
 
 <script>
 import { Collapse, CollapseItem } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { issueList } from '@/api/api';
 
 export default {
@@ -29,7 +31,8 @@ export default {
   },
   components: {
     [Collapse.name]: Collapse,
-    [CollapseItem.name]: CollapseItem
+    [CollapseItem.name]: CollapseItem,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

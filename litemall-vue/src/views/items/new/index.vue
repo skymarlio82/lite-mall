@@ -1,5 +1,6 @@
 <template>
   <div class="goods_new">
+    <navi-back :pageName="'home'"/>
     <div class="banner">
       <div class="title">新品首发</div>
     </div>
@@ -26,6 +27,7 @@
 <script>
 import { goodsList } from '@/api/api';
 import { Card, List } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import scrollFixed from '@/mixin/scroll-fixed';
 
 export default {
@@ -69,9 +71,9 @@ export default {
   },
 
   components: {
-
     [List.name]: List,
-    [Card.name]: Card
+    [Card.name]: Card,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

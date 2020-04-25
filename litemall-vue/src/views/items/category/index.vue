@@ -1,29 +1,22 @@
 <template>
   <div class="item_list">
-    <van-tabs v-model="navActive"
-              @click="handleTabClick">
-      <van-tab v-for="(nav, index) in navList"
-               :title="nav.name"
-               :key="index">
-        <van-list v-model="loading"
-                  :finished="finished"
-                  :immediate-check="false"
-                  finished-text="没有更多了"
-                  @load="getGoodsList">
+    <navi-back :pageName="'home'"/>
+    <van-tabs v-model="navActive" @click="handleTabClick">
+      <van-tab v-for="(nav, index) in navList" :title="nav.name" :key="index">
+        <van-list v-model="loading" :finished="finished" :immediate-check="false" finished-text="没有更多了" @load="getGoodsList">
           <div class="h">
             <div class="name">{{currentCategory.name}}</div>
             <div class="desc">{{currentCategory.desc}}</div>
           </div>
           <van-card v-for="(item, i) in goodsList"
-                    :key="i"
-                    :desc="item.brief"
-                    :title="item.name"
-                    :thumb="item.picUrl"
-                    :price="item.retailPrice"
-                    :origin-price="item.counterPrice"
-                    @click="itemClick(item.id)" />
+            :key="i"
+            :desc="item.brief"
+            :title="item.name"
+            :thumb="item.picUrl"
+            :price="item.retailPrice"
+            :origin-price="item.counterPrice"
+            @click="itemClick(item.id)" />
         </van-list>
-
       </van-tab>
     </van-tabs>
   </div>
@@ -32,17 +25,16 @@
 <script>
 import { goodsCategory, goodsList } from '@/api/api';
 import { Card, List, Tab, Tabs } from 'vant';
+import NaviBack from '@/components/navi-back/';
 
 export default {
   name: 'Item-list',
-
   props: {
     itemClass: {
       type: [String, Number],
       default: ''
     }
   },
-
   data() {
     return {
       categoryId: this.itemClass,
@@ -56,11 +48,9 @@ export default {
       finished: false
     };
   },
-
   created() {
     this.init();
   },
-
   methods: {
     handleTabClick(index) {
       this.categoryId = this.navList[index].id;
@@ -105,12 +95,12 @@ export default {
       this.$router.push(`/items/detail/${id}`);
     }
   },
-
   components: {
     [List.name]: List,
     [Card.name]: Card,
     [Tab.name]: Tab,
-    [Tabs.name]: Tabs
+    [Tabs.name]: Tabs,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>
@@ -119,7 +109,6 @@ export default {
 .item_list {
   background-color: #fff;
 }
-
 .h {
   height: 100px;
   width: 100%;
@@ -128,7 +117,6 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 .h .name {
   display: block;
   height: 30px;
@@ -136,7 +124,6 @@ export default {
   font-size: 20px;
   color: #333;
 }
-
 .h .desc {
   display: block;
   height: 24px;

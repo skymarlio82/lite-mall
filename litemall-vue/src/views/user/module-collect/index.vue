@@ -1,5 +1,6 @@
 <template>
   <div class="user_collect">
+    <navi-back :pageName="'user'"/>
     <van-list v-model="loading"
       :finished="finished"
       :immediate-check="false"
@@ -24,6 +25,7 @@
 
 <script>
 import { Card, Search, List } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { collectList, collectAddOrDelete } from '@/api/api';
 import IsEmpty from '@/components/is-empty/';
 import scrollFixed from '@/mixin/scroll-fixed';
@@ -69,7 +71,8 @@ export default {
     [Search.name]: Search,
     [IsEmpty.name]: IsEmpty,
     [List.name]: List,
-    [Card.name]: Card
+    [Card.name]: Card,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

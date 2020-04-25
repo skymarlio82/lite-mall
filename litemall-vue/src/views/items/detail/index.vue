@@ -1,5 +1,6 @@
 <template>
   <div class="item_detail">
+    <navi-back :pageName="'home'"/>
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in goods.info.gallery" :key="index">
         <img v-lazy="image" width="100%">
@@ -54,6 +55,7 @@
 <script>
 import { goodsDetail, cartGoodsCount, collectAddOrDelete, cartAdd, cartFastAdd } from '@/api/api';
 import { Sku, Swipe, SwipeItem, GoodsAction, GoodsActionButton, GoodsActionIcon, Popup } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { setLocalStorage } from '@/utils/local-storage';
 import popupProps from './popup-props';
 import _ from 'lodash';
@@ -322,7 +324,8 @@ export default {
     [GoodsAction.name]: GoodsAction,
     [GoodsActionButton.name]: GoodsActionButton,
     [GoodsActionIcon.name]: GoodsActionIcon,
-    [popupProps.name]: popupProps
+    [popupProps.name]: popupProps,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
 <div class="order">
+  <navi-back :pageName="'home'"/>
   <van-cell-group>
       <van-cell v-if="checkedAddress" isLink @click="goAddressList()" title="收货地址">
       <div slot="label">
@@ -72,7 +73,8 @@
 </template>
 
 <script>
-import { Card, Tag, ard, Field, SubmitBar, Toast  } from 'vant';
+import { Card, Tag, ard, Field, SubmitBar, Toast } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { CouponCell, CouponList, Popup } from 'vant';
 import { cartCheckout, orderSubmit, couponSelectList} from '@/api/api';
 import { getLocalStorage, setLocalStorage } from '@/utils/local-storage';
@@ -218,7 +220,7 @@ export default {
     },
     onExchange() {
       this.$toast("兑换暂不支持");
-    }    
+    }
   },
 
   components: {
@@ -229,7 +231,8 @@ export default {
     [Tag.name]: Field,
     [CouponCell.name]: CouponCell,
     [CouponList.name]: CouponList,
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

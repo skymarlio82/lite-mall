@@ -1,5 +1,6 @@
 <template>
   <div class="payment">
+    <navi-back :pageName="'home'"/>
     <div class="time_down payment_group">请在<span class="red">半小时内</span>完成付款，否则系统自动取消订单</div>
     <van-cell-group class="payment_group">
       <van-cell title="订单编号" :value="order.orderInfo.orderSn"/>
@@ -38,6 +39,7 @@
 
 <script>
 import { Radio, RadioGroup, Dialog } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import { orderDetail, orderWxQrCode, orderWxPayResult, orderWxPayDummy, orderPrepay } from '@/api/api';
 import _ from 'lodash';
 
@@ -109,7 +111,8 @@ export default {
   components: {
     [Radio.name]: Radio,
     [RadioGroup.name]: RadioGroup,
-    [Dialog.name]: Dialog
+    [Dialog.name]: Dialog,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

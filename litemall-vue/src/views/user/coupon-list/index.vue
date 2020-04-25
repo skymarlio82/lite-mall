@@ -1,5 +1,6 @@
 <template>
   <div class="coupon_list">
+    <navi-back :pageName="'user'"/>
     <van-tabs v-model="activeIndex"
               type="card"
               sticky
@@ -41,8 +42,8 @@
 
 <script>
 import { couponMyList } from '@/api/api';
-
 import { Tab, Tabs, Panel, Card, List, CouponCell, CouponList } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import _ from 'lodash';
 
 export default {
@@ -101,6 +102,7 @@ export default {
     [Panel.name]: Panel,
     [Card.name]: Card,
     [List.name]: List,
+    [NaviBack.name]: NaviBack,
     CouponCell,
     CouponList
   }

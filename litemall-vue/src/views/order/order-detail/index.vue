@@ -1,5 +1,6 @@
 <template>
   <div class="order_detail">
+    <navi-back :pageName="'user'"/>
     <div class="order-goods">
       <van-card v-for="item in orderGoods"
                 :key="item.id"
@@ -49,7 +50,7 @@
                     type="danger">取消订单</van-button>
         <van-button size="small"
                     v-if="handleOption.pay"
-                    @click="payOrder(orderInfo.id)"
+                    @click="toPay(orderInfo.id)"
                     style=" float:right"
                     round
                     type="danger">去支付</van-button>
@@ -85,6 +86,7 @@
 
 <script>
 import { Card, Field, SubmitBar, Button, Cell, CellGroup, Dialog } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import _ from 'lodash';
 import {
   orderDetail,
@@ -183,7 +185,8 @@ export default {
     [Button.name]: Button,
     [SubmitBar.name]: SubmitBar,
     [Card.name]: Card,
-    [Field.name]: Field
+    [Field.name]: Field,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>

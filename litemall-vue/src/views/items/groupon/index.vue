@@ -1,5 +1,6 @@
 <template>
   <div class="goods_groupon">
+    <navi-back :pageName="'home'"/>
     <div class="banner">
       <div class="title">团购列表</div>
     </div>
@@ -37,6 +38,7 @@
 <script>
 import { grouponList } from '@/api/api';
 import { Card, Tag, List } from 'vant';
+import NaviBack from '@/components/navi-back/';
 import scrollFixed from '@/mixin/scroll-fixed';
 
 export default {
@@ -81,7 +83,8 @@ export default {
   components: {
     [List.name]: List,
     [Tag.name]: Tag,
-    [Card.name]: Card
+    [Card.name]: Card,
+    [NaviBack.name]: NaviBack
   }
 };
 </script>
