@@ -13,15 +13,15 @@
         <div class="name">
           <img class="img"
                :src="brand.picUrl"
-               background-size="cover" />
+               background-size="cover"/>
           <div class="info-box">
-            <div class="txt">{{brand.name}}</div>
+            <div class="txt">{{ brand.name }}</div>
             <div class="line"></div>
-            <div class="price">{{brand.floorPrice}}元起</div>
+            <div class="price">{{ brand.floorPrice }}元起</div>
           </div>
         </div>
         <div class="desc">
-          {{brand.desc}}
+          {{ brand.desc }}
         </div>
       </div>
     </van-list>
@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { brandList } from '@/api/api';
-import { List } from 'vant';
+import {brandList} from '@/api/api';
+import {List} from 'vant';
 import NaviBack from '@/components/navi-back/';
 
 export default {
@@ -121,13 +121,15 @@ export default {
           width: 300px;
           background: #fff;
         }
-        .price{
+
+        .price {
           height: 25px;
           font-size: 25px;
           color: #fff;
         }
       }
     }
+
     .desc {
       background: #fff;
       width: 100%;

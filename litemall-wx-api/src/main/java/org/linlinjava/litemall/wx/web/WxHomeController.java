@@ -129,8 +129,7 @@ public class WxHomeController {
 			List<LitemallCategory> catL2List = categoryService.queryByPid(catL1.getId());
 			List<Integer> l2List = catL2List.stream().map(catL2 -> catL2.getId()).collect(Collectors.toList());
 			List<LitemallGoods> categoryGoods = (l2List.size() == 0) ? 
-				new ArrayList<>() : 
-				goodsService.queryByCategory(l2List, 0, SystemConfig.getCatlogMoreLimit());
+				new ArrayList<>() : goodsService.queryByCategory(l2List, 0, SystemConfig.getCatlogMoreLimit());
 			Map<String, Object> catGoods = new HashMap<>();
 			catGoods.put("id", catL1.getId());
 			catGoods.put("name", catL1.getName());

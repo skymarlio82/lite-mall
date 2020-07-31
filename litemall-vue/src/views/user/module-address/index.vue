@@ -1,14 +1,14 @@
 <template>
   <div>
-    <van-nav-bar title="收货地址" left-text="返回" left-arrow @click-left="goback"/>
-    <van-address-list v-model="chosenAddressId" :list="addressList" @add="onAdd" @edit="onEdit" @select="onSelect"/>
+    <van-nav-bar @click-left="goback" left-arrow left-text="返回" title="收货地址"/>
+    <van-address-list :list="addressList" @add="onAdd" @edit="onEdit" @select="onSelect" v-model="chosenAddressId"/>
   </div>
 </template>
 
 <script>
-import { addressList, addressDetail, addressSave, addressDelete } from '@/api/api';
-import { AddressList, NavBar } from 'vant';
-import { setLocalStorage } from '@/utils/local-storage';
+import {addressList} from '@/api/api';
+import {AddressList, NavBar} from 'vant';
+import {setLocalStorage} from '@/utils/local-storage';
 
 export default {
   data() {
@@ -51,7 +51,7 @@ export default {
   },
   components: {
     [NavBar.name]: NavBar,
-    [AddressList.name]: AddressList 
+    [AddressList.name]: AddressList
   }
 };
 </script>
@@ -59,10 +59,12 @@ export default {
 <style lang="scss" scoped>
 .addressGroup {
   margin-bottom: 10px;
+
   &:last-child {
     margin-bottom: 0;
   }
 }
+
 .bottom_btn {
   position: fixed;
   bottom: 0;

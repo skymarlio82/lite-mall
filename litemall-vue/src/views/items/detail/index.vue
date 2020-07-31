@@ -2,61 +2,61 @@
   <div class="item_detail">
     <navi-back :pageName="'home'"/>
     <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in goods.info.gallery" :key="index">
+      <van-swipe-item :key="index" v-for="(image, index) in goods.info.gallery">
         <img v-lazy="image" width="100%">
       </van-swipe-item>
     </van-swipe>
     <van-cell-group class="item_cell_group" v-if="goods">
       <van-cell class="item_info">
         <div>
-          <span class="item_price">{{goods.info.retailPrice*100 | yuan}}</span>
-          <span class="item_market_price">{{goods.info.counterPrice*100 | yuan}}</span>
+          <span class="item_price">{{ goods.info.retailPrice * 100 | yuan }}</span>
+          <span class="item_market_price">{{ goods.info.counterPrice * 100 | yuan }}</span>
         </div>
-        <div class="item-title">{{goods.info.name}}</div>
-        <div class="item_intro">{{goods.info.brief}}</div>
+        <div class="item-title">{{ goods.info.name }}</div>
+        <div class="item_intro">{{ goods.info.brief }}</div>
       </van-cell>
     </van-cell-group>
     <div class="item_cell_group">
       <van-cell-group>
-        <van-cell title="规格" isLink value="请选择" @click.native="skuClick"/>
-        <van-cell title="属性" isLink @click.native="propsPopup=true"/>
+        <van-cell @click.native="skuClick" isLink title="规格" value="请选择"/>
+        <van-cell @click.native="propsPopup=true" isLink title="属性"/>
         <van-cell title="运费" value="满88免邮费"/>
       </van-cell-group>
       <van-sku
-        v-model="showSku"
-        :sku="sku"
-        :hide-stock="true"
-        :goods="skuGoods"
-        :goodsId="goods.info.id"
-        :close-on-click-overlay="true"
-        @buy-clicked="buyGoods"
-        @add-cart="addCart"
+          :close-on-click-overlay="true"
+          :goods="skuGoods"
+          :goodsId="goods.info.id"
+          :hide-stock="true"
+          :sku="sku"
+          @add-cart="addCart"
+          @buy-clicked="buyGoods"
+          v-model="showSku"
       />
-      <van-popup v-model="propsPopup" position="bottom">
+      <van-popup position="bottom" v-model="propsPopup">
         <popup-props :propsStr="props_str"></popup-props>
       </van-popup>
     </div>
     <div class="item_desc">
       <div class="item_desc_title">商品详情</div>
-      <div class="item_desc_wrap" v-if="goods.info.detail" v-html="goods.info.detail"></div>
-      <div class="item_desc_wrap" v-else style="text-align: center;">
+      <div class="item_desc_wrap" v-html="goods.info.detail" v-if="goods.info.detail"></div>
+      <div class="item_desc_wrap" style="text-align: center;" v-else>
         <p>无详情</p>
       </div>
     </div>
     <van-goods-action>
-      <van-goods-action-icon @click="toCart" icon="cart-o" :info="(cartInfo > 0) ? cartInfo : ''"/>
-      <van-goods-action-icon @click="addCollect" icon="star-o" :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;' : ''"/>
-      <van-goods-action-button type="warning" @click="skuClick" text="加入购物车"/>
-      <van-goods-action-button type="danger" @click="skuClick" text="立即购买"/>
+      <van-goods-action-icon :info="(cartInfo > 0) ? cartInfo : ''" @click="toCart" icon="cart-o"/>
+      <van-goods-action-icon :style="(goods.userHasCollect !== 0) ? 'color: #f7b444;' : ''" @click="addCollect" icon="star-o"/>
+      <van-goods-action-button @click="skuClick" text="加入购物车" type="warning"/>
+      <van-goods-action-button @click="skuClick" text="立即购买" type="danger"/>
     </van-goods-action>
   </div>
 </template>
 
 <script>
-import { goodsDetail, cartGoodsCount, collectAddOrDelete, cartAdd, cartFastAdd } from '@/api/api';
-import { Sku, Swipe, SwipeItem, GoodsAction, GoodsActionButton, GoodsActionIcon, Popup } from 'vant';
+import {cartAdd, cartFastAdd, cartGoodsCount, collectAddOrDelete, goodsDetail} from '@/api/api';
+import {GoodsAction, GoodsActionButton, GoodsActionIcon, Popup, Sku, Swipe, SwipeItem} from 'vant';
 import NaviBack from '@/components/navi-back/';
-import { setLocalStorage } from '@/utils/local-storage';
+import {setLocalStorage} from '@/utils/local-storage';
 import popupProps from './popup-props';
 import _ from 'lodash';
 
@@ -117,7 +117,7 @@ export default {
       this.showSku = true;
     },
     initData() {
-      goodsDetail({ id: this.itemId }).then(res => {
+      goodsDetail({id: this.itemId}).then(res => {
         this.goods = res.data.data;
         this.skuAdapter();
       });
@@ -131,7 +131,7 @@ export default {
       });
     },
     addCollect() {
-      collectAddOrDelete({ valueId: this.itemId, type: 0 }).then(res => {
+      collectAddOrDelete({valueId: this.itemId, type: 0}).then(res => {
         if (this.goods.userHasCollect === 1) {
           this.goods.userHasCollect = 0;
         } else {
@@ -199,8 +199,8 @@ export default {
         return;
       } else if (_.has(data.selectedSkuComb, 's2')) {
         params.productId = this.getProductId(
-          data.selectedSkuComb.s1,
-          data.selectedSkuComb.s2
+            data.selectedSkuComb.s1,
+            data.selectedSkuComb.s2
         );
       } else {
         params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
@@ -230,15 +230,15 @@ export default {
         return;
       } else if (_.has(data.selectedSkuComb, 's2')) {
         params.productId = this.getProductId(
-          data.selectedSkuComb.s1,
-          data.selectedSkuComb.s2
+            data.selectedSkuComb.s1,
+            data.selectedSkuComb.s2
         );
       } else {
         params.productId = this.getProductIdByOne(data.selectedSkuComb.s1);
       }
       cartFastAdd(params).then(res => {
         let cartId = res.data.data;
-        setLocalStorage({ CartId: cartId });
+        setLocalStorage({CartId: cartId});
         that.showSku = false;
         this.$router.push('/order/checkout');
       });
@@ -269,10 +269,10 @@ export default {
         var sku_list_obj = {};
         _.each(v.specifications, (specificationName, index) => {
           sku_list_obj['s' + (~~index + 1)] = this.findSpecValueIdByName(
-            specificationName
+              specificationName
           );
         });
-        sku_list_obj.price = v.price*100;
+        sku_list_obj.price = v.price * 100;
         sku_list_obj.stock_num = v.number;
         sku_list.push(sku_list_obj);
       });
@@ -336,26 +336,32 @@ export default {
     max-width: 100%;
   }
 }
+
 .item_cell_group {
   margin-bottom: 15px;
 }
+
 .item_price {
   font-size: 20px;
   color: $red;
   margin-right: 10px;
 }
+
 .item_market_price {
   color: $font-color-gray;
   text-decoration: line-through;
   font-size: $font-size-small;
 }
+
 .item-title {
   line-height: 1.4;
 }
+
 .item_dispatch {
   font-size: $font-size-small;
   color: $font-color-gray;
 }
+
 .item_intro {
   line-height: 18px;
   margin: 5px 0;
@@ -367,18 +373,22 @@ export default {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
 .item_desc {
   background-color: #fff;
+
   /deep/ p {
     padding: 0 10px;
     margin-block-start: 0 !important;
     margin-block-end: 0 !important;
   }
+
   /deep/ img {
     max-width: 100%;
     display: block;
   }
 }
+
 .item_desc_title {
   @include one-border;
   padding: 10px 0;

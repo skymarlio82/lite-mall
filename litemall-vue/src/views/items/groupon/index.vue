@@ -5,28 +5,28 @@
       <div class="title">团购列表</div>
     </div>
 
-    <van-list v-model="loading"
-              :finished="finished"
+    <van-list :finished="finished"
               :immediate-check="false"
+              @load="getGrouponList"
               finished-text="没有更多了"
-              @load="getGrouponList">
-      <van-card v-for="(item, i) in list"
+              v-model="loading">
+      <van-card :desc="item.brief"
                 :key="i"
-                :desc="item.brief"
-                :title="item.name"
-                :thumb="item.picUrl"
-                :price="item.retailPrice"
                 :origin-price="item.counterPrice"
-                @click="itemClick(item.id)">
+                :price="item.retailPrice"
+                :thumb="item.picUrl"
+                :title="item.name"
+                @click="itemClick(item.id)"
+                v-for="(item, i) in list">
         <div slot="tags">
           <van-tag plain
                    type="primary">
-            {{item.grouponMember}}人成团
+            {{ item.grouponMember }}人成团
           </van-tag>
           <van-tag plain
-                   type="danger"
-                   style="margin-left:5px;">
-            {{item.grouponDiscount}}元再减
+                   style="margin-left:5px;"
+                   type="danger">
+            {{ item.grouponDiscount }}元再减
           </van-tag>
         </div>
       </van-card>
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import { grouponList } from '@/api/api';
-import { Card, Tag, List } from 'vant';
+import {grouponList} from '@/api/api';
+import {Card, List, Tag} from 'vant';
 import NaviBack from '@/components/navi-back/';
 import scrollFixed from '@/mixin/scroll-fixed';
 
@@ -92,11 +92,13 @@ export default {
 <style lang="scss" scoped>
 .goods_groupon {
   padding: 20px;
+
   .banner {
     height: 250px;
     background-image: url('http://yanxuan.nosdn.127.net/8976116db321744084774643a933c5ce.png');
     background-size: cover;
     margin-bottom: 20px;
+
     .title {
       text-align: center;
       line-height: 200px;

@@ -1,21 +1,21 @@
 <template>
   <div class="user_collect">
     <navi-back :pageName="'user'"/>
-    <van-list v-model="loading"
-      :finished="finished"
-      :immediate-check="false"
-      finished-text="没有更多了"
-      @load="getCollectList">
-      <van-card v-for="(item, i) in list"
-        :key="i"
-        :desc="item.brief"
-        :title="item.name"
-        :thumb="item.picUrl"
-        :price="item.retailPrice"
-        :origin-price="item.counterPrice"
-        @click="itemClick(item.valueId)">
+    <van-list :finished="finished"
+              :immediate-check="false"
+              @load="getCollectList"
+              finished-text="没有更多了"
+              v-model="loading">
+      <van-card :desc="item.brief"
+                :key="i"
+                :origin-price="item.counterPrice"
+                :price="item.retailPrice"
+                :thumb="item.picUrl"
+                :title="item.name"
+                @click="itemClick(item.valueId)"
+                v-for="(item, i) in list">
         <div slot="footer">
-          <van-button size="mini" icon="lajitong" @click.stop="cancelCollect($event, i,item)">删除</van-button>
+          <van-button @click.stop="cancelCollect($event, i,item)" icon="lajitong" size="mini">删除</van-button>
         </div>
       </van-card>
     </van-list>
@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import { Card, Search, List } from 'vant';
+import {Card, List, Search} from 'vant';
 import NaviBack from '@/components/navi-back/';
-import { collectList, collectAddOrDelete } from '@/api/api';
+import {collectAddOrDelete, collectList} from '@/api/api';
 import IsEmpty from '@/components/is-empty/';
 import scrollFixed from '@/mixin/scroll-fixed';
 
@@ -50,15 +50,15 @@ export default {
     },
     getCollectList() {
       this.page++;
-      collectList({ type: 0, page: this.page, limit: this.limit }).then(res => {
+      collectList({type: 0, page: this.page, limit: this.limit}).then(res => {
         this.list.push(...res.data.data.list);
         this.loading = false;
         this.finished = res.data.data.page >= res.data.data.pages;
       });
     },
     cancelCollect(event, i, item) {
-      this.$dialog.confirm({ message: '是否取消收藏该商品' }).then(() => {
-        collectAddOrDelete({ valueId: item.valueId, type: 0 }).then(res => {
+      this.$dialog.confirm({message: '是否取消收藏该商品'}).then(() => {
+        collectAddOrDelete({valueId: item.valueId, type: 0}).then(res => {
           this.list.splice(i, 1);
         });
       });

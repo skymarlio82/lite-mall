@@ -1,38 +1,40 @@
 <template>
   <div class="refund_list">
-    <van-tabs sticky :active="activeIndex" :swipe-threshold="5" @click="handleTabClick">
-      <van-tab v-for="(tab, tabIndex) in tabsItem" :title="tab.name" :key="tabIndex">
-        <van-list v-model="loading"
-                  :finished="finished"
+    <van-tabs :active="activeIndex" :swipe-threshold="5" @click="handleTabClick" sticky>
+      <van-tab :key="tabIndex" :title="tab.name" v-for="(tab, tabIndex) in tabsItem">
+        <van-list :finished="finished"
                   :immediate-check="false"
+                  @load="getRefundList"
                   finished-text="没有更多了"
-                  @load="getRefundList">
+                  v-model="loading">
           <van-panel
-            v-for="(el, i) in tab.items"
-            class="order_list--panel"
-            :key="i"
-            :title="'订单编号: ' + el.id"
-            :status="getStatusText(el.status)"
+              :key="i"
+              :status="getStatusText(el.status)"
+              :title="'订单编号: ' + el.id"
+              class="order_list--panel"
+              v-for="(el, i) in tab.items"
           >
             <div>
               <van-card
-                class="order_list--van-card"
-                :key="i"
-                :title="el.orderItem.item_name"
-                :desc="el.orderItem.sku_props_str"
-                :num="10000"
-                :price="(el.orderItem.price / 100).toFixed(2)"
-                :thumb="el.orderItem.pic_url"
+                  :desc="el.orderItem.sku_props_str"
+                  :key="i"
+                  :num="10000"
+                  :price="(el.orderItem.price / 100).toFixed(2)"
+                  :thumb="el.orderItem.pic_url"
+                  :title="el.orderItem.item_name"
+                  class="order_list--van-card"
               />
               <div
-                class="order_list--total"
-              >合计: {{el.refund_fee | yuan}}（含运费{{el.refund_post_fee | yuan}}）</div>
+                  class="order_list--total"
+              >合计: {{ el.refund_fee | yuan }}（含运费{{ el.refund_post_fee | yuan }}）
+              </div>
             </div>
             <div slot="footer" style="text-align: right;">
               <van-button
-                size="small"
-                @click="refund_handle(i)"
-              >{{ el.status == 10 ? "撤销申请" : "查看详情"}}</van-button>
+                  @click="refund_handle(i)"
+                  size="small"
+              >{{ el.status == 10 ? "撤销申请" : "查看详情" }}
+              </van-button>
             </div>
           </van-panel>
         </van-list>
@@ -42,9 +44,9 @@
 </template>
 
 <script>
-import { REFUND_LIST } from '@/api/api';
+import {REFUND_LIST} from '@/api/api';
 
-import { Tab, Tabs, Panel, Card, List } from 'vant';
+import {Card, List, Panel, Tab, Tabs} from 'vant';
 
 const STATUS_TEXT = {
   10: '退款中',
@@ -92,13 +94,13 @@ export default {
       const item = this.items[i];
       if (item.status == 10) {
         this.$dialog
-          .confirm({
-            message: '撤销后将不能再次发起申请，确定要撤销该申请吗？'
-          })
-          .then(() => {
-            this.$toast('已撤销该退款申请');
-            this.items[i].status = 50;
-          });
+            .confirm({
+              message: '撤销后将不能再次发起申请，确定要撤销该申请吗？'
+            })
+            .then(() => {
+              this.$toast('已撤销该退款申请');
+              this.items[i].status = 50;
+            });
       } else {
         // 跳转退款详情
       }
@@ -111,7 +113,7 @@ export default {
     getStatusText(status) {
       return STATUS_TEXT[status] || '';
     },
-    getRefundList(){
+    getRefundList() {
 
     }
   },
@@ -132,6 +134,7 @@ export default {
   &--footer_btn {
     text-align: right;
   }
+
   &--panel {
     margin-bottom: 10px;
   }

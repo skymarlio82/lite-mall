@@ -36,11 +36,12 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .tabbar-user {
   > div {
     margin-bottom: 10px;
   }
+
   &__quit {
     background: #DB3D3C;
     border: 0;

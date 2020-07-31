@@ -1,24 +1,25 @@
-<!--index.wxml-->
 <view class="container">
+  <!-- search bar for product -->
   <view class="search">
     <navigator url="/pages/search/search" class="input">
       <image class="icon"></image>
       <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
     </navigator>
   </view>
+  <!-- banner swiper for promotion advertisment images -->
   <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="id">
-      <!-- <navigator url="{{item.link}}"> -->
       <image src="{{item.url}}" background-size="cover"></image>
-      <!-- </navigator> -->
     </swiper-item>
   </swiper>
+  <!-- category menu icons group -->
   <view class="m-menu">
     <navigator class="item" url="/pages/category/category?id={{item.id}}" wx:for="{{channel}}" wx:key="id">
       <image src="{{item.iconUrl}}" background-size="cover"></image>
       <text>{{item.name}}</text>
     </navigator>
   </view>
+  <!-- coupon -->
   <view class="a-section a-coupon" wx:if="{{coupon.length > 0}}">
     <view class="h">
       <view class="title">
@@ -35,18 +36,19 @@
           <view class="tag">{{item.tag}}</view>
           <view class="left">
             <view class="discount">{{item.discount}}元</view>
-            <view class="min"> 满{{item.min}}元使用</view>
+            <view class="min">满{{item.min}}元使用</view>
           </view>
           <view class="right">
             <view class="name">{{item.name}}</view>
             <view class="desc">{{item.desc}}</view>
             <view class="time" wx:if="{{item.days != 0}}">有效期：{{item.days}}天</view>
-            <view class="time" wx:else> 有效期：{{item.startTime}} - {{item.endTime}}</view>
+            <view class="time" wx:else>有效期：{{item.startTime}} - {{item.endTime}}</view>
           </view>
         </view>
       </view>
     </view>
   </view>
+  <!-- groupon -->
   <view class="a-section a-groupon" wx:if="{{groupons.length > 0}}">
     <view class="h">
       <view class="title">
@@ -80,6 +82,7 @@
       </view>
     </view>
   </view>
+  <!-- brand -->
   <view class="a-section a-brand">
     <view class="h">
       <navigator url="../brand/brand">
@@ -101,6 +104,7 @@
       </view>
     </view>
   </view>
+  <!-- new product -->
   <view class="a-section a-new" wx:if="{{newGoods.length > 0}}">
     <view class="h">
       <view>
@@ -119,6 +123,7 @@
       </view>
     </view>
   </view>
+  <!-- hot & popular -->
   <view class="a-section a-popular" wx:if="{{hotGoods.length > 0}}">
     <view class="h">
       <view>
@@ -142,6 +147,7 @@
       </view>
     </view>
   </view>
+  <!-- topic -->
   <view class="a-section a-topic" wx:if="topics.length > 0">
     <view class="h">
       <view>
@@ -165,6 +171,7 @@
       </scroll-view>
     </view>
   </view>
+  <!-- floor goods -->
   <view class="good-grid" wx:for="{{floorGoods}}" wx:key="id">
     <view class="h">
       <text>{{item.name}}</text>

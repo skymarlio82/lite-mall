@@ -1,4 +1,3 @@
-
 package org.linlinjava.litemall.db.service;
 
 import org.linlinjava.litemall.db.dao.StatMapper;
@@ -11,21 +10,21 @@ import java.util.Map;
 @Service
 public class StatService {
 
-	@Resource
-	private StatMapper statMapper;
+    @Resource
+    private StatMapper statMapper;
 
-	@SuppressWarnings("rawtypes")
-	public List<Map> statUser() {
-		return statMapper.statUser();
-	}
+    @SuppressWarnings("rawtypes")
+    public List<Map> statUser() {
+        return statMapper.statUser();
+    }
 
-	@SuppressWarnings("rawtypes")
-	public List<Map> statOrder() {
-		return statMapper.statOrder();
-	}
+    @SuppressWarnings("rawtypes")
+    public List<Map> statOrder() {
+        return statMapper.statOrder();
+    }
 
-	@SuppressWarnings("rawtypes")
-	public List<Map> statGoods() {
-		return statMapper.statGoods();
-	}
+    @SuppressWarnings("rawtypes")
+    public List<Map> statGoods() {
+        return statMapper.statGoods();
+    }
 }

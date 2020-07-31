@@ -2,32 +2,32 @@
   <div class="user_information">
     <navi-back :pageName="'user'"/>
     <van-cell-group>
-      <van-cell title="头像" class="cell_middle">
-        <van-uploader :before-read="avatarBeforeRead" :afterRead="avatarAfterRead">
+      <van-cell class="cell_middle" title="头像">
+        <van-uploader :afterRead="avatarAfterRead" :before-read="avatarBeforeRead">
           <div class="user_avatar_upload">
             <!-- <img :src="avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'" alt="你的头像" v-if="avatar"> -->
-            <img :src="avatar" alt="你的头像" width="50" height="50" v-if="avatar">
+            <img :src="avatar" alt="你的头像" height="50" v-if="avatar" width="50">
             <van-icon name="camera_full" v-else></van-icon>
           </div>
         </van-uploader>
       </van-cell>
-      <van-cell title="昵称" to="/user/information/setNickname" :value="nickName" isLink/>
-      <van-cell title="性别" :value="genderText" @click="showSex = true" isLink/>
-      <van-cell title="密码" to="/user/information/setPassword" isLink/>
-      <van-cell title="手机" to="/user/information/setMobile" :value="mobile" isLink/>
+      <van-cell :value="nickName" isLink title="昵称" to="/user/information/setNickname"/>
+      <van-cell :value="genderText" @click="showSex = true" isLink title="性别"/>
+      <van-cell isLink title="密码" to="/user/information/setPassword"/>
+      <van-cell :value="mobile" isLink title="手机" to="/user/information/setMobile"/>
     </van-cell-group>
-    <van-button size="large" class="user_quit" @click="loginOut">退出</van-button>
-    <van-popup v-model="showSex" position="bottom">
-      <van-picker showToolbar :columns="sexColumns" title="选择性别" @cancel="showSex = false" @confirm="onSexConfirm" />
+    <van-button @click="loginOut" class="user_quit" size="large">退出</van-button>
+    <van-popup position="bottom" v-model="showSex">
+      <van-picker :columns="sexColumns" @cancel="showSex = false" @confirm="onSexConfirm" showToolbar title="选择性别"/>
     </van-popup>
   </div>
 </template>
 
 <script>
-import { Uploader, Picker, Popup, Button } from 'vant';
+import {Button, Picker, Popup, Uploader} from 'vant';
 import NaviBack from '@/components/navi-back/';
-import { getLocalStorage, setLocalStorage, removeLocalStorage } from '@/utils/local-storage';
-import { authInfo, authLogout, authProfile } from '@/api/api';
+import {removeLocalStorage, setLocalStorage} from '@/utils/local-storage';
+import {authInfo, authLogout, authProfile} from '@/api/api';
 
 export default {
   data() {
@@ -58,10 +58,10 @@ export default {
     avatarBeforeRead(file) {
       return new Promise((resolve, reject) => {
         if (file.type !== 'image/png') {
-          this.$dialog.alert({ message: '上传图片格式PNG' });
+          this.$dialog.alert({message: '上传图片格式PNG'});
           reject();
         } else if (file.size > 10240) {
-          this.$dialog.alert({ message: '图片SIZE不可大于10K' });
+          this.$dialog.alert({message: '图片SIZE不可大于10K'});
           reject();
         } else {
           resolve();
@@ -72,9 +72,9 @@ export default {
       authProfile({
         avatar: file.content,
       }).then(res => {
-        setLocalStorage({ avatar: file.content });
+        setLocalStorage({avatar: file.content});
         this.avatar = file.content;
-        return this.$dialog.alert({ message: '头像保存成功' });
+        return this.$dialog.alert({message: '头像保存成功'});
       });
     },
     onSexConfirm(value, index) {
@@ -83,7 +83,7 @@ export default {
       }).then(res => {
         this.gender = index[0];
         this.showSex = false;
-        return this.$dialog.alert({ message: '性别保存成功' });
+        return this.$dialog.alert({message: '性别保存成功'});
       });
     },
     getUserInfo() {
@@ -99,7 +99,7 @@ export default {
         removeLocalStorage('Authorization');
         removeLocalStorage('avatar');
         removeLocalStorage('nickName');
-        this.$router.push({ name: 'home' });
+        this.$router.push({name: 'home'});
       });
     }
   },
@@ -120,10 +120,12 @@ export default {
     width: 50px;
     height: 50px;
     border: 1px solid $border-color;
+
     img {
       max-width: 100%;
       max-height: 100%;
     }
+
     i {
       position: absolute;
       top: 50%;
@@ -133,6 +135,7 @@ export default {
       color: $border-color;
     }
   }
+
   .user_quit {
     margin-top: 20px;
   }

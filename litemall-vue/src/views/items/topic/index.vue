@@ -6,15 +6,15 @@
     </div>
 
     <van-row gutter>
-      <van-col span="12"
-               v-for="(goods ,index) in topicGoods"
-               :key="index">
+      <van-col :key="index"
+               span="12"
+               v-for="(goods ,index) in topicGoods">
         <router-link :to="{ path: `/items/detail/${goods.id}`}">
           <img :src="goods.picUrl"
                style="width:150px;height:150px;">
         </router-link>
-        <div style="margin-left: 20px; rgb(123, 116, 116);">{{goods.name}}</div>
-        <div style="margin-left: 20px; color:#ab956d">￥ {{goods.retailPrice}}</div>
+        <div style="margin-left: 20px; rgb(123, 116, 116);">{{ goods.name }}</div>
+        <div style="margin-left: 20px; color:#ab956d">￥ {{ goods.retailPrice }}</div>
       </van-col>
     </van-row>
 
@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { topicDetail, topicRelated } from '@/api/api';
-import { Card, Row, Col } from 'vant';
+import {topicDetail, topicRelated} from '@/api/api';
+import {Card, Col, Row} from 'vant';
 import NaviBack from '@/components/navi-back/';
 
 export default {
@@ -79,6 +79,7 @@ export default {
       margin-block-start: 0 !important;
       margin-block-end: 0 !important;
     }
+
     /deep/ img {
       max-width: 100%;
       width: 100% !important;

@@ -1,13 +1,13 @@
 <template>
   <div class="popup_wrap">
-    <van-icon name="clear" class="cancel_popup" @click.native="$parent.value = false"></van-icon>
+    <van-icon @click.native="$parent.value = false" class="cancel_popup" name="clear"></van-icon>
     <div class="popup_header">商品属性</div>
     <div class="popup_content">
       <van-cell-group>
-        <van-cell v-for="(str, i) in propsStr" :key="i">
+        <van-cell :key="i" v-for="(str, i) in propsStr">
           <van-row>
-            <van-col span="8">{{str[0]}}</van-col>
-            <van-col span="16">{{str[1]}}</van-col>
+            <van-col span="8">{{ str[0] }}</van-col>
+            <van-col span="16">{{ str[1] }}</van-col>
           </van-row>
         </van-cell>
       </van-cell-group>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { Row, Col } from 'vant';
+import {Col, Row} from 'vant';
 
 export default {
   name: 'popup-props',
@@ -41,6 +41,7 @@ export default {
   position: relative;
   padding-bottom: 30px;
   box-sizing: border-box;
+
   .popup_header {
     padding: 15px 0 30px 0;
     text-align: center;
@@ -54,14 +55,17 @@ export default {
     overflow-y: scroll;
     padding: 0 10px;
     line-height: 30px;
+
     &::-webkit-scrollbar {
       background-color: #fff;
       width: 5px;
     }
+
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
       background-color: #bebebe;
     }
+
     ol {
       padding-left: 15px;
       list-style: decimal;

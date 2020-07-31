@@ -1,23 +1,23 @@
 <template>
   <div>
-    <van-nav-bar title="编辑地址" left-text="返回" left-arrow @click-left="goback"/>
+    <van-nav-bar @click-left="goback" left-arrow left-text="返回" title="编辑地址"/>
     <van-address-edit
-      style="background-color: #fff;"
-      :areaList="areaList"
-      :addressInfo="addressInfo"
-      show-set-default
-      show-delete
-      @save="onSave"
-      @delete="onDelete"
+        :addressInfo="addressInfo"
+        :areaList="areaList"
+        @delete="onDelete"
+        @save="onSave"
+        show-delete
+        show-set-default
+        style="background-color: #fff;"
     />
   </div>
 </template>
 
 <script>
-import { AddressEdit, NavBar } from 'vant';
+import {AddressEdit, NavBar} from 'vant';
 import areaList from './area.json';
-import { addressDetail, addressSave, addressDelete } from '@/api/api';
-import { removeLocalStorage } from '@/utils/local-storage';
+import {addressDelete, addressDetail, addressSave} from '@/api/api';
+import {removeLocalStorage} from '@/utils/local-storage';
 
 export default {
   name: 'address-edit',
@@ -45,7 +45,7 @@ export default {
       });
     },
     onDelete(content) {
-      addressDelete({ id: content.id });
+      addressDelete({id: content.id});
       removeLocalStorage('AddressId');
       this.$router.push({name: 'address'});
     },

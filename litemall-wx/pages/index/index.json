@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "易钛商铺",
   "usingComponents": {
     "zan-capsule": "../../lib/zanui-weapp/capsule/index"
   }

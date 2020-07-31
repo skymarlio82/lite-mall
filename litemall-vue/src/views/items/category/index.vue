@@ -1,21 +1,21 @@
 <template>
   <div class="item_list">
     <navi-back :pageName="'home'"/>
-    <van-tabs v-model="navActive" @click="handleTabClick">
-      <van-tab v-for="(nav, index) in navList" :title="nav.name" :key="index">
-        <van-list v-model="loading" :finished="finished" :immediate-check="false" finished-text="没有更多了" @load="getGoodsList">
+    <van-tabs @click="handleTabClick" v-model="navActive">
+      <van-tab :key="index" :title="nav.name" v-for="(nav, index) in navList">
+        <van-list :finished="finished" :immediate-check="false" @load="getGoodsList" finished-text="没有更多了" v-model="loading">
           <div class="h">
-            <div class="name">{{currentCategory.name}}</div>
-            <div class="desc">{{currentCategory.desc}}</div>
+            <div class="name">{{ currentCategory.name }}</div>
+            <div class="desc">{{ currentCategory.desc }}</div>
           </div>
-          <van-card v-for="(item, i) in goodsList"
-            :key="i"
-            :desc="item.brief"
-            :title="item.name"
-            :thumb="item.picUrl"
-            :price="item.retailPrice"
-            :origin-price="item.counterPrice"
-            @click="itemClick(item.id)" />
+          <van-card :desc="item.brief"
+                    :key="i"
+                    :origin-price="item.counterPrice"
+                    :price="item.retailPrice"
+                    :thumb="item.picUrl"
+                    :title="item.name"
+                    @click="itemClick(item.id)"
+                    v-for="(item, i) in goodsList"/>
         </van-list>
       </van-tab>
     </van-tabs>
@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import { goodsCategory, goodsList } from '@/api/api';
-import { Card, List, Tab, Tabs } from 'vant';
+import {goodsCategory, goodsList} from '@/api/api';
+import {Card, List, Tab, Tabs} from 'vant';
 import NaviBack from '@/components/navi-back/';
 
 export default {
@@ -56,12 +56,12 @@ export default {
       this.categoryId = this.navList[index].id;
       this.$router.replace({
         name: 'category',
-        query: { itemClass: this.categoryId }
+        query: {itemClass: this.categoryId}
       });
       this.init();
     },
     init() {
-      goodsCategory({ id: this.categoryId }).then(res => {
+      goodsCategory({id: this.categoryId}).then(res => {
         this.navList = res.data.data.brotherCategory;
         this.currentCategory = res.data.data.currentCategory;
         // 当id是L1分类id时，这里需要重新设置成L1分类的一个子分类的id
@@ -109,6 +109,7 @@ export default {
 .item_list {
   background-color: #fff;
 }
+
 .h {
   height: 100px;
   width: 100%;
@@ -117,6 +118,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
 .h .name {
   display: block;
   height: 30px;
@@ -124,6 +126,7 @@ export default {
   font-size: 20px;
   color: #333;
 }
+
 .h .desc {
   display: block;
   height: 24px;

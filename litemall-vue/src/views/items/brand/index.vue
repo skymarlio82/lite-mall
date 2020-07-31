@@ -3,29 +3,29 @@
     <navi-back :pageName="'brandList'"/>
     <div class="brand-info">
       <div class="name">
-        <img class="img"
-             :src="brand.picUrl"
-             background-size="cover" />
+        <img :src="brand.picUrl"
+             background-size="cover"
+             class="img"/>
         <div class="info-box">
-          <div class="txt">{{brand.name}}</div>
+          <div class="txt">{{ brand.name }}</div>
           <div class="line"></div>
         </div>
       </div>
       <div class="desc">
-        {{brand.desc}}
+        {{ brand.desc }}
       </div>
     </div>
 
     <van-row gutter>
-      <van-col span="12"
-               v-for="(goods ,index) in brandGoods"
-               :key="index">
+      <van-col :key="index"
+               span="12"
+               v-for="(goods ,index) in brandGoods">
         <router-link :to="{ path: `/items/detail/${goods.id}`}">
           <img :src="goods.picUrl"
                style="width:150px;height:150px;">
         </router-link>
-        <div style="margin-left: 20px; rgb(123, 116, 116);">{{goods.name}}</div>
-        <div style="margin-left: 20px; color:#ab956d">￥ {{goods.retailPrice}}</div>
+        <div style="margin-left: 20px; rgb(123, 116, 116);">{{ goods.name }}</div>
+        <div style="margin-left: 20px; color:#ab956d">￥ {{ goods.retailPrice }}</div>
       </van-col>
     </van-row>
 
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { brandDetail, goodsList } from '@/api/api';
-import { Card, Row, Col } from 'vant';
+import {brandDetail, goodsList} from '@/api/api';
+import {Card, Col, Row} from 'vant';
 import NaviBack from '@/components/navi-back/';
 
 export default {
@@ -126,6 +126,7 @@ export default {
         }
       }
     }
+
     .desc {
       background: #fff;
       width: 100%;

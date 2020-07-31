@@ -1,4 +1,3 @@
-
 package org.linlinjava.litemall.db;
 
 import org.junit.Test;
@@ -20,8 +19,8 @@ public class StatMapperTest {
     @Autowired
     private StatMapper statMapper;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	@Test
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Test
     public void testUser() {
         List<Map> result = statMapper.statUser();
         for (Map m : result) {
@@ -29,8 +28,8 @@ public class StatMapperTest {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	@Test
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Test
     public void testOrder() {
         List<Map> result = statMapper.statOrder();
         for (Map m : result) {
@@ -38,8 +37,8 @@ public class StatMapperTest {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	@Test
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Test
     public void testGoods() {
         List<Map> result = statMapper.statGoods();
         for (Map m : result) {

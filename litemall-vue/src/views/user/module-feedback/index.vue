@@ -2,31 +2,31 @@
   <div>
     <navi-back :pageName="'user-server'"/>
     <van-cell-group title="反馈类型">
-      <van-cell class="order-coupon" :title="type" is-link arrow-direction="down" @click="showList=true"/>
+      <van-cell :title="type" @click="showList=true" arrow-direction="down" class="order-coupon" is-link/>
     </van-cell-group>
     <van-cell-group title="反馈内容">
-      <van-field v-model="content" 
-        clearable autosize center
-        placeholder="对我们网站、商品、服务，你还有什么建议吗？你还希望在商城上买到什么？请告诉我们..." 
-        type="textarea"
-        rows="10"
-        size="large"
+      <van-field autosize
+                 center clearable placeholder="对我们网站、商品、服务，你还有什么建议吗？你还希望在商城上买到什么？请告诉我们..."
+                 rows="10"
+                 size="large"
+                 type="textarea"
+                 v-model="content"
       />
     </van-cell-group>
     <van-cell-group title="联系方式">
-      <van-field size="large" v-model="mobile" placeholder="请输入联系电话，方便我们与您联系"/>
+      <van-field placeholder="请输入联系电话，方便我们与您联系" size="large" v-model="mobile"/>
     </van-cell-group>
-    <van-button size="large" type="primary" @click="submit">提交</van-button>
-    <van-popup v-model="showList" position="bottom">
+    <van-button @click="submit" size="large" type="primary">提交</van-button>
+    <van-popup position="bottom" v-model="showList">
       <van-picker :columns="types" @change="onType"/>
     </van-popup>
   </div>
 </template>
 
 <script>
-import { Field , Picker, Popup, Button } from 'vant';
+import {Button, Field, Picker, Popup} from 'vant';
 import NaviBack from '@/components/navi-back/';
-import { feedbackAdd } from '@/api/api';
+import {feedbackAdd} from '@/api/api';
 
 export default {
   data: () => ({
@@ -37,14 +37,14 @@ export default {
     type: ''
   }),
   created() {
-    
+
   },
   methods: {
     onType(picker, value, index) {
       this.type = value
       this.showList = false
     },
-    submit () {
+    submit() {
       if (this.mobile === '') {
         this.$toast("请输入联系电话");
         return;
@@ -56,7 +56,7 @@ export default {
       if (this.content === '') {
         this.$toast("请输入反馈内容");
         return;
-      }      
+      }
       feedbackAdd({mobile: this.mobile, feedType: this.type, content: this.content}).then(res => {
         this.$toast("感谢您的宝贵意见！");
         this.$router.go(-1);
@@ -76,10 +76,12 @@ export default {
 <style lang="scss" scoped>
 .addressGroup {
   margin-bottom: 10px;
+
   &:last-child {
     margin-bottom: 0;
   }
 }
+
 .bottom_btn {
   position: fixed;
   bottom: 0;

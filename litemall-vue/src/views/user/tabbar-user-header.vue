@@ -1,17 +1,17 @@
 <template>
-  <div class="user_header" :style="{backgroundImage: `url(${background_image})`}">
-    <van-icon name="set" class="user_set" @click="toSetting" />
+  <div :style="{backgroundImage: `url(${background_image})`}" class="user_header">
+    <van-icon @click="toSetting" class="user_set" name="set"/>
     <div class="user_avatar">
-      <img :src="avatar" alt="头像" width="50" height="50">
+      <img :src="avatar" alt="头像" height="50" width="50">
     </div>
-    <div>{{nickName}}</div>
+    <div>{{ nickName }}</div>
   </div>
 </template>
 
 <script>
 import avatar_default from '@/assets/images/avatar_default.png';
 import bg_default from '@/assets/images/user_head_bg.png';
-import { getLocalStorage } from '@/utils/local-storage';
+import {getLocalStorage} from '@/utils/local-storage';
 
 export default {
   name: 'user-header',
@@ -38,7 +38,7 @@ export default {
       this.nickName = infoData.nickName || '昵称';
     },
     toSetting() {
-      this.$router.push({ name: 'user-information' });
+      this.$router.push({name: 'user-information'});
     }
   }
 };
@@ -53,14 +53,17 @@ export default {
   color: #fff;
   padding-top: 30px;
 }
+
 .user_set {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 28px;
 }
+
 .user_avatar {
   margin-bottom: 10px;
+
   img {
     border: 0;
     border-radius: 50%;

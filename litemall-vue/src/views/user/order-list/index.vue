@@ -1,41 +1,41 @@
 <template>
   <div class="order_list">
     <navi-back :pageName="'user'"/>
-    <van-tabs v-model="activeIndex" :swipe-threshold="5" @click="handleTabClick">
-      <van-tab v-for="(tabTitle, index) in tabTitles" :title="tabTitle" :key="index">
-        <van-list v-model="loading" :finished="finished" :immediate-check="false" finished-text="没有更多了"
-          @load="getOrderList">
-          <van-panel v-for="(el, i) in orderList" :key="i" :title="'订单编号: ' + el.orderSn"
-            :status="el.orderStatusText"
-            @click.native="toOrderDetail(el.id)">
-            <van-card v-for="(goods, goodsI) in el.goodsList" :key="goodsI" :title="goods.goodsName" :num="goods.number"
-              :thumb="goods.picUrl">
+    <van-tabs :swipe-threshold="5" @click="handleTabClick" v-model="activeIndex">
+      <van-tab :key="index" :title="tabTitle" v-for="(tabTitle, index) in tabTitles">
+        <van-list :finished="finished" :immediate-check="false" @load="getOrderList" finished-text="没有更多了"
+                  v-model="loading">
+          <van-panel :key="i" :status="el.orderStatusText" :title="'订单编号: ' + el.orderSn"
+                     @click.native="toOrderDetail(el.id)"
+                     v-for="(el, i) in orderList">
+            <van-card :key="goodsI" :num="goods.number" :thumb="goods.picUrl" :title="goods.goodsName"
+                      v-for="(goods, goodsI) in el.goodsList">
               <div slot="desc">
                 <div class="desc">
-                  <van-tag plain style="margin-right:6px;" v-for="(spec, index) in goods.specifications" :key="index">
-                    {{spec}}
+                  <van-tag :key="index" plain style="margin-right:6px;" v-for="(spec, index) in goods.specifications">
+                    {{ spec }}
                   </van-tag>
                 </div>
               </div>
             </van-card>
-            <div class="total">合计: {{el.actualPrice * 100 | yuan}}（含运费{{el.post_fee | yuan}}）</div>
-            <div slot="footer" class="footer_btn">
-              <van-button size="small" v-if="el.handleOption.cancel" @click="cancelOrder(el.id)">
+            <div class="total">合计: {{ el.actualPrice * 100 | yuan }}（含运费{{ el.post_fee | yuan }}）</div>
+            <div class="footer_btn" slot="footer">
+              <van-button @click="cancelOrder(el.id)" size="small" v-if="el.handleOption.cancel">
                 取消订单
               </van-button>
-              <van-button size="small" v-if="el.handleOption.pay" type="danger" @click.stop="toPay(el.id)">
+              <van-button @click.stop="toPay(el.id)" size="small" type="danger" v-if="el.handleOption.pay">
                 去支付
               </van-button>
-              <van-button size="small" v-if="el.handleOption.refund" type="danger" @click="refundOrder(el.id)">
+              <van-button @click="refundOrder(el.id)" size="small" type="danger" v-if="el.handleOption.refund">
                 退款
               </van-button>
-              <van-button size="small" v-if="el.handleOption.confirm" type="danger" @click="confirmOrder(el.id)">
+              <van-button @click="confirmOrder(el.id)" size="small" type="danger" v-if="el.handleOption.confirm">
                 确认收货
               </van-button>
-              <van-button size="small" v-if="el.handleOption.delete" @click="delOrder(el.id)">
+              <van-button @click="delOrder(el.id)" size="small" v-if="el.handleOption.delete">
                 删除订单
               </van-button>
-              <van-button size="small" v-if="el.handleOption.comment" @click="commentOrder(el.id)">
+              <van-button @click="commentOrder(el.id)" size="small" v-if="el.handleOption.comment">
                 去评价
               </van-button>
             </div>
@@ -47,9 +47,8 @@
 </template>
 
 <script>
-import { orderList, orderDelete, orderConfirm, orderCancel, orderRefund } from '@/api/api';
-import _ from 'lodash';
-import { Tab, Tabs, Panel, Card, List, Tag } from 'vant';
+import {orderConfirm, orderDelete, orderList, orderRefund} from '@/api/api';
+import {Card, List, Panel, Tab, Tabs, Tag} from 'vant';
 import NaviBack from '@/components/navi-back/';
 
 export default {
@@ -97,53 +96,58 @@ export default {
     delOrder(id) {
       let that = this;
       this.$dialog
-        .confirm({ message: '确定要删除该订单吗?' })
-        .then(() => {
-          orderDelete({ orderId: id }).then(() => {
-            this.init();
-            this.$toast('已删除订单');
+          .confirm({message: '确定要删除该订单吗?'})
+          .then(() => {
+            orderDelete({orderId: id}).then(() => {
+              this.init();
+              this.$toast('已删除订单');
+            });
+          })
+          .catch(() => {
           });
-        })
-        .catch(() => {});
     },
     cancelOrder(id) {
       this.$dialog
-        .confirm({ message: '确定要取消该订单吗?' })
-        .then(() => {
-          orderDelete({ orderId: id }).then(() => {
-            this.init();
-            this.$toast('已取消该订单');
+          .confirm({message: '确定要取消该订单吗?'})
+          .then(() => {
+            orderDelete({orderId: id}).then(() => {
+              this.init();
+              this.$toast('已取消该订单');
+            });
+          })
+          .catch(() => {
           });
-        })
-        .catch(() => {});
     },
     refundOrder(id) {
       this.$dialog
-        .confirm({ message: '确定要申请退款吗?' })
-        .then(() => {
-          orderRefund({ orderId: id }).then(() => {
-            this.init();
-            this.$toast('已申请订单退款');
+          .confirm({message: '确定要申请退款吗?'})
+          .then(() => {
+            orderRefund({orderId: id}).then(() => {
+              this.init();
+              this.$toast('已申请订单退款');
+            });
+          })
+          .catch(() => {
           });
-        })
-        .catch(() => {});
-    },    
+    },
     confirmOrder(id) {
       this.$dialog
-        .confirm({
-          message: '请确认收到货物, 确认收货后无法撤销!'
-        })
-        .then(() => {
-          orderConfirm({ orderId: id }).then(() => {
-            this.init();
-            this.$toast('已确认收货');
+          .confirm({
+            message: '请确认收到货物, 确认收货后无法撤销!'
+          })
+          .then(() => {
+            orderConfirm({orderId: id}).then(() => {
+              this.init();
+              this.$toast('已确认收货');
+            });
+          })
+          .catch(() => {
           });
-        })
-        .catch(() => {});
     },
-    commentOrder(id) {},
+    commentOrder(id) {
+    },
     toPay(id) {
-      this.$router.push({ name: 'payment', params: { orderId: id } });
+      this.$router.push({name: 'payment', params: {orderId: id}});
     },
     handleTabClick() {
       this.page = 0;
@@ -153,7 +157,7 @@ export default {
     toOrderDetail(id) {
       this.$router.push({
         path: '/order/order-detail',
-        query: { orderId: id }
+        query: {orderId: id}
       });
     }
   },
@@ -174,15 +178,19 @@ export default {
   .van-panel {
     margin-top: 20px;
   }
+
   .van-card {
     background-color: #fff;
   }
+
   .total {
     text-align: right;
     padding: 10px;
   }
+
   .footer_btn {
     text-align: right;
+
     .van-button {
       margin-left: 10px;
     }

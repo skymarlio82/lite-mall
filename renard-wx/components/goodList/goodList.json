@@ -1,6 +1,6 @@
 {
- "component": true,
- "usingComponents": {
-  "good": "../good/good"
- }
+  "component": true,
+  "usingComponents": {
+    "good": "../good/good"
+  }
 }

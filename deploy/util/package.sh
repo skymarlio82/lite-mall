@@ -6,15 +6,15 @@
 # 2. 编译litemall-admin
 # 3. 编译litemall-all模块，然后拷贝到deploy/litemall
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 cd $DIR/../..
 LITEMALL_HOME=$PWD
 echo "LITEMALL_HOME $LITEMALL_HOME"
 
 # 复制数据库
-cat $LITEMALL_HOME/litemall-db/sql/litemall_schema.sql > $LITEMALL_HOME/deploy/db/litemall.sql
-cat $LITEMALL_HOME/litemall-db/sql/litemall_table.sql >> $LITEMALL_HOME/deploy/db/litemall.sql
-cat $LITEMALL_HOME/litemall-db/sql/litemall_data.sql >> $LITEMALL_HOME/deploy/db/litemall.sql
+cat $LITEMALL_HOME/litemall-db/sql/litemall_schema.sql >$LITEMALL_HOME/deploy/db/litemall.sql
+cat $LITEMALL_HOME/litemall-db/sql/litemall_table.sql >>$LITEMALL_HOME/deploy/db/litemall.sql
+cat $LITEMALL_HOME/litemall-db/sql/litemall_data.sql >>$LITEMALL_HOME/deploy/db/litemall.sql
 
 cd $LITEMALL_HOME/litemall-admin
 # 安装阿里node镜像工具

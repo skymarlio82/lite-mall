@@ -71,14 +71,14 @@ export default {
         this.order = res.data.data;
       });
     },
-    applyOrderWxQrCode(orderId) {
-      this.isWeixin = navigator.userAgent.toLowerCase().indexOf('micromessenger') != -1;
-      if (!this.isWeixin) {
-        orderWxQrCode({orderId: orderId}).then(res => {
-          this.orderWsQrCodeUrl = process.env.VUE_APP_BASE_API + 'wx/order/qrc?code_url=' + res.data.data.code_url;
-        });
-      }
-    },
+    // applyOrderWxQrCode(orderId) {
+    //   // this.isWeixin = navigator.userAgent.toLowerCase().indexOf('micromessenger') != -1;
+    //   // if (!this.isWeixin) {
+    //     orderWxQrCode({orderId: orderId}).then(res => {
+    //       this.orderWsQrCodeUrl = process.env.VUE_APP_BASE_API + 'wx/order/qrc?code_url=' + res.data.data.code_url;
+    //     });
+    //   // }
+    // },
     pay() {
       this.timer_obj = setInterval(() => {
         orderDetail({orderId: this.orderId}).then(res => {
@@ -97,15 +97,9 @@ export default {
       }, 3000);
     },
     try2Pay() {
-      // if (this.isWeixin) {
-        // orderWxPayDummy({orderId: this.orderId}).then(res => {
-          // let url = "http://www.changchunamy.com/Home/wxPay?orderId=" + this.order.orderInfo.orderSn + "&totalFee=" + this.order.orderInfo.actualPrice;
-          let url = "http://www.changchunamy.com/Home/wxPay?orderId=" + this.order.orderInfo.orderSn + "&totalFee=1";
-          window.location.assign(url);
-        // });
-      // } else {
-      //   this.pay();
-      // }
+      // let url = 'https://www.changchunamy.com/wxPayApi/Home/wxPay?orderId=' + this.order.orderInfo.orderSn + '&totalFee=' + this.order.orderInfo.actualPrice;
+      let url = 'https://www.changchunamy.com/wxPayApi/Home/wxPay?orderId=' + this.order.orderInfo.orderSn + '&totalFee=1';
+      window.location.assign(url);
     }
   },
   components: {

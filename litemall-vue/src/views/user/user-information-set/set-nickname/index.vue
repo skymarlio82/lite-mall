@@ -2,17 +2,17 @@
   <div class="set_nickname">
     <navi-back :pageName="'user-information'"/>
     <van-cell-group>
-      <van-field v-model="nickName" label="昵称"/>
+      <van-field label="昵称" v-model="nickName"/>
     </van-cell-group>
     <div class="bottom_btn">
-      <van-button size="large" type="danger" @click="saveNick">保存</van-button>
+      <van-button @click="saveNick" size="large" type="danger">保存</van-button>
     </div>
   </div>
 </template>
 
 <script>
-import { authProfile } from '@/api/api';
-import { Field } from 'vant';
+import {authProfile} from '@/api/api';
+import {Field} from 'vant';
 import NaviBack from '@/components/navi-back/';
 
 export default {
@@ -30,14 +30,14 @@ export default {
     },
     saveNick() {
       if (true) {
-        authProfile({ nickname: this.nickName })
-          .then(res => {
-            localStorage.setItem('nickName', res.data.data.nickName);
-            return this.$dialog.alert({ message: '昵称保存成功' });
-          })
-          .then(() => {
-            this.$router.go(-1);
-          });
+        authProfile({nickname: this.nickName})
+            .then(res => {
+              localStorage.setItem('nickName', res.data.data.nickName);
+              return this.$dialog.alert({message: '昵称保存成功'});
+            })
+            .then(() => {
+              this.$router.go(-1);
+            });
       }
     }
   },
