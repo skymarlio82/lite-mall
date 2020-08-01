@@ -3,65 +3,65 @@ package org.linlinjava.litemall.wx.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix="litemall.wxpay")
+@ConfigurationProperties(prefix = "litemall.wxpay")
 public class MyWxPayProperties {
 
-	private String appid;
-	private String mchid;
-	private String mchkey;
-	private String notifyurl;
-	private String keypath;
-	private String ipaddress;
+    private String appid;
+    private String mchid;
+    private String mchkey;
+    private String notifyurl;
+    private String keypath;
+    private String ipaddress;
 
-	public MyWxPayProperties() {
-		
-	}
+    public MyWxPayProperties() {
 
-	public String getAppid() {
-		return appid;
-	}
+    }
 
-	public void setAppid(String appid) {
-		this.appid = appid;
-	}
+    public String getAppid() {
+        return appid;
+    }
 
-	public String getMchid() {
-		return mchid;
-	}
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
 
-	public void setMchid(String mchid) {
-		this.mchid = mchid;
-	}
+    public String getMchid() {
+        return mchid;
+    }
 
-	public String getMchkey() {
-		return mchkey;
-	}
+    public void setMchid(String mchid) {
+        this.mchid = mchid;
+    }
 
-	public void setMchkey(String mchkey) {
-		this.mchkey = mchkey;
-	}
+    public String getMchkey() {
+        return mchkey;
+    }
 
-	public String getNotifyurl() {
-		return notifyurl;
-	}
+    public void setMchkey(String mchkey) {
+        this.mchkey = mchkey;
+    }
 
-	public void setNotifyurl(String notifyurl) {
-		this.notifyurl = notifyurl;
-	}
+    public String getNotifyurl() {
+        return notifyurl;
+    }
 
-	public String getKeypath() {
-		return keypath;
-	}
+    public void setNotifyurl(String notifyurl) {
+        this.notifyurl = notifyurl;
+    }
 
-	public void setKeypath(String keypath) {
-		this.keypath = keypath;
-	}
+    public String getKeypath() {
+        return keypath;
+    }
 
-	public String getIpaddress() {
-		return ipaddress;
-	}
+    public void setKeypath(String keypath) {
+        this.keypath = keypath;
+    }
 
-	public void setIpaddress(String ipaddress) {
-		this.ipaddress = ipaddress;
-	}
+    public String getIpaddress() {
+        return ipaddress;
+    }
+
+    public void setIpaddress(String ipaddress) {
+        this.ipaddress = ipaddress;
+    }
 }
